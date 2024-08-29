@@ -11,5 +11,5 @@ outils extérieurs :
 
 1. Initialisation du projet avec breeze
 2. Création des models et migration
-   Post, PostReaction, PostAttachment, Comment, Group, GroupUser, Follower, User (déjà présent)
+   Post, PostReaction, PostAttachment, Comment, Group, GroupUser, Follower, User (déjà présent; ajout)
    
