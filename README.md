@@ -22,4 +22,7 @@ outils utilisés :
    b. utilisation de spatie sluggable dans le model User pour générer le champ username dynamiquement lors de l'inscription uniquement
    c. Gérer le changement manuel du username dans la page d'éditon du profile (ajout du champ, sauvegarde en DB, personnalisation des règles)
 
-4. 
+4. edfer
+    exécuter npm install @headlessui/vite@latest
+    heroicons.com : svg pour document word, download
+5. 1;29;40
