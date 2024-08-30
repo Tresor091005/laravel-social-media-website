@@ -21,3 +21,5 @@ outils utilisés :
    a. Ajout de la fonctionnnalité MustVerifyEmail au model User et configuration de mailpit pour le projet
    b. utilisation de spatie sluggable dans le model User pour générer le champ username dynamiquement lors de l'inscription uniquement
    c. Gérer le changement manuel du username dans la page d'éditon du profile (ajout du champ, sauvegarde en DB, personnalisation des règles)
+
+4. 
