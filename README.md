@@ -26,3 +26,8 @@ outils utilisés :
 5. Frontend : User profile page
    - point important > faire attention au rendu des utilisateurs non connectés
 
+6. Vu : 
+   - lecture d'un fichier niveau frontend
+   - Utilisation d'un UserResource pour personnaliser les données envoyés au frontend depuis le backend
+   - Gestion de la preview d'image avec FileReader (js)
+   - Utilisation d'un formulaire avec Inertia Js (vue 3) : useForm and errors
