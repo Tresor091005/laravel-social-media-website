@@ -40,7 +40,7 @@ class ProfileController extends Controller
 
         $request->user()->save();
 
-        return Redirect::route('profile', $request->user());
+        return to_route('profile', $request->user())->with('notification', 'Your profile information was successfully updated.');
     }
 
     /**

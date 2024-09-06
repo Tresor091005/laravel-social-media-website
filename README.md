@@ -31,4 +31,6 @@ outils utilisés :
    - Utilisation d'un UserResource pour personnaliser les données envoyés au frontend depuis le backend
    - Gestion de la preview d'image avec FileReader (js)
    - Utilisation d'un formulaire avec Inertia Js (vue 3) : useForm and errors
-   - PROBLEME AVEC LA NOTIFICATION
+   - PROBLEME AVEC LA NOTIFICATION, Recuperation des urls (UserResource)
+
+7.

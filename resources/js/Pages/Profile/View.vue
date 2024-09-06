@@ -5,8 +5,7 @@ import {Head, useForm, usePage} from '@inertiajs/vue3';
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import TabItem from "@/Pages/Profile/Partials/TabItem.vue";
 import Edit from "@/Pages/Profile/Edit.vue";
-import PrimaryButton from "@/Components/PrimaryButton.vue";
-import {XMarkIcon, CheckCircleIcon, CameraIcon, PencilIcon} from "@heroicons/vue/24/solid";
+import {XMarkIcon, CheckCircleIcon, CameraIcon} from "@heroicons/vue/24/solid";
 
 const imagesForm = useForm({
     cover:null,
@@ -174,19 +173,12 @@ function submitAvatarImage () {
                     </div>
                     <div class="flex justify-between items-center flex-1 p-4">
                         <h2 class="font-bold text-lg">{{ props.user.name }}</h2>
-                        <PrimaryButton v-if="isMyProfile">
-                            <PencilIcon class="w-4 h-4 mr-2" />
-                            Edit Profile
-                        </PrimaryButton>
                     </div>
                 </div>
             </div>
             <div class="border-t">
                 <TabGroup>
                     <TabList class="flex bg-white">
-                        <Tab v-if="isMyProfile" v-slot="{ selected }" as="template">
-                            <TabItem text="About" :selected="selected"/>
-                        </Tab>
                         <Tab v-slot="{ selected }" as="template">
                             <TabItem text="Posts" :selected="selected"/>
                         </Tab>
@@ -199,12 +191,12 @@ function submitAvatarImage () {
                         <Tab v-slot="{ selected }" as="template">
                             <TabItem text="Photos" :selected="selected"/>
                         </Tab>
+                        <Tab v-if="isMyProfile" v-slot="{ selected }" as="template">
+                            <TabItem text="My profile" :selected="selected"/>
+                        </Tab>
                     </TabList>
 
                     <TabPanels class="mt-2">
-                        <TabPanel v-if="isMyProfile" >
-                            <Edit :must-verify-email="mustVerifyEmail" :status="status"/>
-                        </TabPanel>
                         <TabPanel class="bg-white p-3 shadow">
                             Posts
                         </TabPanel>
@@ -216,6 +208,9 @@ function submitAvatarImage () {
                         </TabPanel>
                         <TabPanel class="bg-white p-3 shadow">
                             Photos
+                        </TabPanel>
+                        <TabPanel v-if="isMyProfile" >
+                            <Edit :must-verify-email="mustVerifyEmail" :status="status"/>
                         </TabPanel>
                     </TabPanels>
                 </TabGroup>
