@@ -69,12 +69,23 @@ class ProfileController extends Controller
         $user = $request->user();
         $data = $request->validate([
             'cover' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'avatar' => 'nullable|image',
+            'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
+        $success = '';
+        /** @var UploadedFile $avatar */
         $avatar = $data['avatar'] ?? null;
         /** @var UploadedFile $cover */
         $cover = $data['cover'] ?? null;
+
+        if ($avatar) {
+            if ($user->avatar_path) {
+                Storage::disk('public')->delete($user->avatar_path);
+            }
+            $path =  $avatar->store('user-'.$user->id, 'public');
+            $user->update(['avatar_path' => $path]);
+            $success = 'Your avatar image was updated';
+        }
 
         if ($cover) {
             if ($user->cover_path) {
@@ -82,8 +93,9 @@ class ProfileController extends Controller
             }
             $path =  $cover->store('user-'.$user->id, 'public');
             $user->update(['cover_path' => $path]);
+            $success = 'Your cover image was updated';
         }
 
-        return back()->with('notification', 'cover-image-update');
+        return back()->with('notification', $success);
     }
 }
