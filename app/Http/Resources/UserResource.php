@@ -15,7 +15,6 @@ class UserResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        // penser à remplacer par file exists !
         $coverUrl = $this->cover_path ? Storage::url($this->cover_path) : null;
         $avatarUrl = $this->avatar_path ? Storage::url($this->avatar_path) : null;
         return [

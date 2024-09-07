@@ -13,6 +13,12 @@ const imagesForm = useForm({
 })
 
 const showNotification = ref(true)
+const triggerNotification = () => {
+    showNotification.value = true
+    setTimeout(()=>{
+        showNotification.value = false
+    }, 3000)
+}
 
 const props = defineProps({
     errors: Object,
@@ -72,15 +78,11 @@ function submitCoverImage () {
     imagesForm.post(route('profile.updateImages'), {
         onSuccess: () => {
             resetCoverImage()
-            setTimeout(()=>{
-                showNotification.value = false
-            }, 3000)
+            triggerNotification()
         },
         onError: () => {
             resetCoverImage()
-            setTimeout(()=>{
-                showNotification.value = false
-            }, 3000)
+            triggerNotification()
         }
     })
 }
@@ -89,15 +91,11 @@ function submitAvatarImage () {
     imagesForm.post(route('profile.updateImages'), {
         onSuccess: () => {
             resetAvatarImage()
-            setTimeout(()=>{
-                showNotification.value = false
-            }, 3000)
+            triggerNotification()
         },
         onError: () => {
             resetAvatarImage()
-            setTimeout(()=>{
-                showNotification.value = false
-            }, 3000)
+            triggerNotification()
         }
     })
 }
