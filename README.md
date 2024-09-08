@@ -43,3 +43,5 @@ outils utilisés :
     - Mise en place d'une boite modale PostModal et découverte de fonction Vuejs : emit, computed, watch
     - Un oeil sur la nomenclature et la methode des routes (dans ce cas l'update qui se fait par PUT)
         et l'autorisation sur la requête de mise à jour
+    - QU'EST CE QUE LE SOFT DELETE DANS LE MODEL DE POST
+    - 
