@@ -119,7 +119,7 @@ function submitAvatarImage () {
             <div class="relative bg-white group">
                 <img :src="coverImageSrc || props.user.cover_url || '/img/default_cover.jpg'"
                     class="w-full h-[200px] object-cover" alt="cover-image">
-                <div class="absolute top-2 right-2">
+                <div v-if="isMyProfile" class="absolute top-2 right-2">
                     <button v-if="!coverImageSrc" class="bg-gray-50 hover:bg-gray-100 text-gray-800 py-1 px-2 text-xs flex items-center opacity-0 group-hover:opacity-100">
                         <CameraIcon class="w-3 h-3 mr-2" />
 
@@ -148,26 +148,27 @@ function submitAvatarImage () {
                     <div class="flex items-center justify-center relative group/avatar ml-[48px] -mt-[64px] w-[128px] h-[128px]">
                         <img :src="avatarImageSrc || props.user.avatar_url || '/img/default_avatar.webp'"
                              class="w-full h-full object-cover rounded-full" alt="avatar-image">
-                        <button v-if="!avatarImageSrc" class="rounded-full absolute left-0 right-0 top-0 bottom-0 bg-black/50 text-gray-200 opacity-0 flex items-center justify-center group-hover/avatar:opacity-100">
-                            <CameraIcon class="w-8 h-8"/>
-                            <input type="file" accept="image/*" class="absolute top-0 left-0 bottom-0 right-0 cursor-pointer opacity-0"
-                                       @change="onAvatarChange"
-                                />
-                        </button>
-                        <div v-else class="absolute top-1 right-0 flex flex-col gap-2 opacity-0 group-hover/avatar:opacity-100">
-                            <button
-                                class="w-7 h-7 flex items-center justify-center bg-red-500/80 text-white rounded-full"
-                                @click="resetAvatarImage"
-                            >
-                                <XMarkIcon class="h-5 w-5"/>
+                        <template v-if="isMyProfile">
+                            <button v-if="!avatarImageSrc" class="rounded-full absolute left-0 right-0 top-0 bottom-0 bg-black/50 text-gray-200 opacity-0 flex items-center justify-center group-hover/avatar:opacity-100">
+                                <CameraIcon class="w-8 h-8"/>
+                                <input type="file" accept="image/*" class="absolute top-0 left-0 bottom-0 right-0 cursor-pointer opacity-0"
+                                           @change="onAvatarChange"
+                                    />
                             </button>
-                            <button class="w-7 h-7 flex items-center justify-center bg-emerald-500/80 text-white rounded-full"
-                                    @click="submitAvatarImage"
-                            >
-                                <CheckCircleIcon class="h-5 w-5"/>
-                            </button>
-                        </div>
-
+                            <div v-else class="absolute top-1 right-0 flex flex-col gap-2 opacity-0 group-hover/avatar:opacity-100">
+                                <button
+                                    class="w-7 h-7 flex items-center justify-center bg-red-500/80 text-white rounded-full"
+                                    @click="resetAvatarImage"
+                                >
+                                    <XMarkIcon class="h-5 w-5"/>
+                                </button>
+                                <button class="w-7 h-7 flex items-center justify-center bg-emerald-500/80 text-white rounded-full"
+                                        @click="submitAvatarImage"
+                                >
+                                    <CheckCircleIcon class="h-5 w-5"/>
+                                </button>
+                            </div>
+                        </template>
                     </div>
                     <div class="flex justify-between items-center flex-1 p-4">
                         <h2 class="font-bold text-lg">{{ props.user.name }}</h2>

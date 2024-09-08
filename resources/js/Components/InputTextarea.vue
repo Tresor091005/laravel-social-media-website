@@ -24,12 +24,19 @@ onMounted(() => {
 
 defineExpose({ focus: () => input.value.focus() });
 
-function onInputChange () {
+function adjustHeight() {
     if (props.autoResize) {
         input.value.style.height = 'auto'
         input.value.style.height = input.value.scrollHeight + 'px'
     }
 }
+function onInputChange () {
+    adjustHeight()
+}
+
+onMounted(() => {
+    adjustHeight()
+})
 </script>
 
 <template>

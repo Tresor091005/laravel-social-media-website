@@ -1,7 +1,10 @@
 <script setup>
 import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/vue'
+import {Menu, MenuButton, MenuItems, MenuItem} from '@headlessui/vue'
+import {PencilIcon, TrashIcon, EllipsisVerticalIcon} from '@heroicons/vue/20/solid'
+import PostUserHeader from "@/Components/app/PostUserHeader.vue";
 
-defineProps({
+const props = defineProps({
     post: Object,
 })
 
@@ -9,30 +12,80 @@ function isImage(attachment) {
     const mime = attachment.mime.split('/')
     return mime[0].toLowerCase() === 'image'
 }
+
+const emit = defineEmits(['editClick'])
+
+function openEditModal(){
+    emit('editClick', props.post)
+}
 </script>
 
 <template>
   <div class="bg-white border rounded p-4 mb-3">
-      <div class="flex items-center gap-2 mb-3">
-          <a href="javascript:void(0)">
-              <img
-                  :src="post.user.avatar_url"
-                  class="w-[40px] rounded-full border-2 transition-all hover:border-blue-500"
-                  alt="User"
-              />
-          </a>
-          <div>
-              <h4 class="font-bold">
-                  <a href="javascript:void(0)" class="hover:underline">{{ post.user.name }}</a>
-                  <template v-if="post.group">
-                      >
-                      <a href="javascript:void(0)" class="hover:underline" >{{ post.group.name }}</a>
-                  </template>
-              </h4>
-              <small class="text-gray-400">{{ post.created_at }}</small>
-          </div>
+      <!-- Post header -->
+      <div class="flex items-center justify-between mb-3">
+          <PostUserHeader :post="post"/>
+          <Menu as="div" class="relative inline-block text-left">
+              <div>
+                  <MenuButton
+                      class="w-8 h-8 rounded-full hover:bg-black/5 transition flex items-center justify-center"
+                  >
+
+                      <EllipsisVerticalIcon
+                          class="w-5 h-5"
+                          aria-hidden="true"
+                      />
+                  </MenuButton>
+              </div>
+
+              <transition
+                  enter-active-class="transition duration-100 ease-out"
+                  enter-from-class="transform scale-95 opacity-0"
+                  enter-to-class="transform scale-100 opacity-100"
+                  leave-active-class="transition duration-75 ease-in"
+                  leave-from-class="transform scale-100 opacity-100"
+                  leave-to-class="transform scale-95 opacity-0"
+              >
+                  <MenuItems
+                      class="absolute right-0 mt-2 w-32 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none"
+                  >
+                      <div class="px-1 py-1">
+                          <MenuItem v-slot="{ active }">
+                              <button
+                                  @click="openEditModal"
+                                  :class="[
+                                      active ? 'bg-indigo-500 text-white' : 'text-gray-900',
+                                      'group flex w-full items-center rounded-md px-2 py-2 text-sm',
+                                  ]"
+                              >
+                                  <PencilIcon
+                                      class="mr-2 h-5 w-5"
+                                      aria-hidden="true"
+                                  />
+                                  Edit
+                              </button>
+                          </MenuItem>
+                          <MenuItem v-slot="{ active }">
+                              <button
+                                  :class="[
+                                      active ? 'bg-indigo-500 text-white' : 'text-gray-900',
+                                      'group flex w-full items-center rounded-md px-2 py-2 text-sm',
+                                  ]"
+                              >
+                                  <TrashIcon
+                                      class="mr-2 h-5 w-5"
+                                      aria-hidden="true"
+                                  />
+                                  Delete
+                              </button>
+                          </MenuItem>
+                      </div>
+                  </MenuItems>
+              </transition>
+          </Menu>
       </div>
 
+      <!-- Post body -->
       <div class="mb-3">
           <Disclosure v-slot="{ open }">
               <div v-if="!open || post.body.length <= 200" v-html="post.body.substring(0, 200)" />
@@ -49,6 +102,7 @@ function isImage(attachment) {
           </Disclosure>
       </div>
 
+      <!-- Post Attachments -->
       <div class="grid grid-cols-2 lg:grid-cols-3 gap-3 mb-3">
           <template v-for="attachment of post.attachments">
               <div class="group aspect-square bg-blue-100 flex flex-col items-center justify-center text-gray-500 relative">
@@ -86,6 +140,7 @@ function isImage(attachment) {
           </template>
       </div>
 
+      <!-- Reaction and comment btn -->
       <div class="flex gap-2">
           <button class="text-gray-800 flex gap-1 items-center justify-center bg-gray-100 rounded-lg hover:bg-gray-200 py-2 px-4 flex-1">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
