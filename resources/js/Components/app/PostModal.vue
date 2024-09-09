@@ -12,6 +12,33 @@ import InputTextarea from "@/Components/InputTextarea.vue";
 import PostUserHeader from "@/Components/app/PostUserHeader.vue";
 import {useForm} from "@inertiajs/vue3";
 
+import { Ckeditor } from "@ckeditor/ckeditor5-vue";
+import {
+    ClassicEditor,
+    Bold,
+    Italic,
+    Underline,
+    Link,
+    Heading,
+    List,
+    Indent,
+    BlockQuote,
+    Essentials,
+    Mention,
+    Paragraph,
+    Undo,
+    Table
+} from "ckeditor5";
+import 'ckeditor5/ckeditor5.css';
+
+const editor = ClassicEditor
+const editorConfig = {
+    plugins: [Heading, Bold, Italic, Underline, Link, List, BlockQuote, Undo, Essentials, Mention, Paragraph],
+    toolbar: ['heading', '|', 'bold', 'italic', 'underline','|', 'link', 'undo', 'redo', '|',
+        'bulletedList', 'numberedList', 'blockQuote'
+    ],
+}
+
 const props = defineProps({
     post: {
         type: Object,
@@ -94,7 +121,8 @@ function submit(){
                                 </DialogTitle>
                                 <div class="p-4">
                                     <PostUserHeader :post="post" :show-time="false" class="mb-4"/>
-                                    <InputTextarea v-model="form.body" class="mb-3 w-full" />
+                                    <ckeditor :editor="editor" v-model="form.body" :config="editorConfig"></ckeditor>
+<!--                                    <InputTextarea v-model="form.body" class="mb-3 w-full" />-->
                                 </div>
 
                                 <div class="py-3 px-4">

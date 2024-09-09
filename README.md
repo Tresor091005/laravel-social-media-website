@@ -43,5 +43,10 @@ outils utilisés :
     - Mise en place d'une boite modale PostModal et découverte de fonction Vuejs : emit, computed, watch
     - Un oeil sur la nomenclature et la methode des routes (dans ce cas l'update qui se fait par PUT)
         et l'autorisation sur la requête de mise à jour
-    - QU'EST CE QUE LE SOFT DELETE DANS LE MODEL DE POST
-    - 
+    - Le soft deletes d'un modèle a pour effet d'ajouter une colonne deleted_at à la table et ajoute une fonctionnalité de corbeille
+
+9. CKEditor
+    - installation de ckeditor pour vue (démarche sur la page officielle)
+    - mettre à jour le css pour faire correspondre le style de l'écriture et du rendu de l'éditeur
+    - PROBLEME : lors de la fermeture et de la rouverture de la même modal (PostModal) les données ne sont pas réinitialisés
+    - PROBLEME : la condition du read more / read less
