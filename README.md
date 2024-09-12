@@ -3,14 +3,14 @@ laravel version
 ide and version
 base de données
 
-dépendances ajoutées : 
-    laravel breeze
-    spatie sluggable
+dépendances ajoutées :
+laravel breeze
+spatie sluggable
 
 outils utilisés :
-    ide
-    navigateur
-    mailpit
+ide
+navigateur
+mailpit
 
 1. Initialisation du projet avec breeze
 
@@ -24,29 +24,35 @@ outils utilisés :
 
 4. Frontend : Definition de la structure de la page principale
     - Défilement multiple et responsivité
-   
 5. Frontend : User profile page
-   - point important > faire attention au rendu des utilisateurs non connectés
-   
-6. Upload de l'avatar et de la couverture du profile page : 
-   - lecture d'un fichier niveau frontend
-   - Utilisation d'un UserResource pour personnaliser les données envoyés au frontend depuis le backend
-   - Gestion de la preview d'image avec FileReader (js)
-   - Utilisation d'un formulaire avec Inertia Js (vue 3) : useForm and errors
-   - PROBLEME : Recuperation des urls des fichiers(images) supprimés (dans UserResource)
+    - point important > faire attention au rendu des utilisateurs non connectés
+6. Upload de l'avatar et de la couverture du profile page :
+
+    - lecture d'un fichier niveau frontend
+    - Utilisation d'un UserResource pour personnaliser les données envoyés au frontend depuis le backend
+    - Gestion de la preview d'image avec FileReader (js)
+    - Utilisation d'un formulaire avec Inertia Js (vue 3) : useForm and errors
+    - PROBLEME : Recuperation des urls des fichiers(images) supprimés (dans UserResource)
 
 7. Création d'un post et affichage
-   - Modification du Model Post pour y établir les relations
-   - Affichage de la liste de post à partir d'une collection de PostRessource
-    
+    - Modification du Model Post pour y établir les relations
+    - Affichage de la liste de post à partir d'une collection de PostRessource
 8. Mise à jour et suppression d'un post
+
     - Mise en place d'une boite modale PostModal et découverte de fonction Vuejs : emit, computed, watch
     - Un oeil sur la nomenclature et la methode des routes (dans ce cas l'update qui se fait par PUT)
-        et l'autorisation sur la requête de mise à jour
+      et l'autorisation sur la requête de mise à jour
     - Le soft deletes d'un modèle a pour effet d'ajouter une colonne deleted_at à la table et ajoute une fonctionnalité de corbeille
 
 9. CKEditor
     - installation de ckeditor pour vue (démarche sur la page officielle)
     - mettre à jour le css pour faire correspondre le style de l'écriture et du rendu de l'éditeur
-    - PROBLEME : lors de la fermeture et de la rouverture de la même modal (PostModal) les données ne sont pas réinitialisés
-    - PROBLEME : la condition du read more / read less
+    - PROBLEME : lors de la fermeture et de la rouverture de la même modal (PostModal > PostList) les données ne sont pas réinitialisés
+    - PROBLEME : la condition du read more / read less par rapport aux listes
+
+// Besoin
+extension - auto import vue.js / navigate function
+
+10. Attachments upload
+    - TODO : Améliorer les visuels (icône type de fichier) lors de l'upload
+

@@ -4,15 +4,11 @@ import {Menu, MenuButton, MenuItems, MenuItem} from '@headlessui/vue'
 import {PencilIcon, TrashIcon, EllipsisVerticalIcon} from '@heroicons/vue/20/solid'
 import PostUserHeader from "@/Components/app/PostUserHeader.vue";
 import {router} from "@inertiajs/vue3";
+import { isImage } from "@/helpers.js";
 
 const props = defineProps({
     post: Object,
 })
-
-function isImage(attachment) {
-    const mime = attachment.mime.split('/')
-    return mime[0].toLowerCase() === 'image'
-}
 
 const emit = defineEmits(['editClick'])
 
