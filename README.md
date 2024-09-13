@@ -62,3 +62,11 @@ mailpit
     - TODO : Prendre en charge plus de types de fichiers (StorePostRequest)
     - TODO : Pour tous les formulaires tester et gérer les erreurs
 
+11. Attachments on update
+    - front : combiner la preview des nouveaux fichiers (attachmentFiles) et de ceux du post (post.attachments)
+    - front : mettre en place la suppression d'un ancien fichier et l'abandon de cette requête
+    - front : bonne utilisation de la methode PUT
+    - backend : autorisation d'update et règles de validation (certains ajouts à celui de StorePostRequest)
+    - backend : update en DB et en Storage 
+    - Modification du model PostAttachment pour que synchroniser les suppressions DB - Storage
+
