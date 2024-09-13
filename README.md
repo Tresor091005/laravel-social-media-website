@@ -69,4 +69,5 @@ mailpit
     - backend : autorisation d'update et règles de validation (certains ajouts à celui de StorePostRequest)
     - backend : update en DB et en Storage 
     - Modification du model PostAttachment pour que synchroniser les suppressions DB - Storage
+    - Création d'une route dédié au téléchargement des fichierq du disque avec un nom personnalisé (nom d'origine dans la DB)
 
