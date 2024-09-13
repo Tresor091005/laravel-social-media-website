@@ -50,9 +50,15 @@ mailpit
     - PROBLEME : lors de la fermeture et de la rouverture de la même modal (PostModal > PostList) les données ne sont pas réinitialisés
     - PROBLEME : la condition du read more / read less par rapport aux listes
 
-// Besoin
-extension - auto import vue.js / navigate function
-
-10. Attachments upload
+10. Attachments upload on post creation
+    - Ajout de la preview et de l'upload de fichiers côté frontend (PostModal)
+    - Ajout de la colonne size à la table post_attachments
+    - Ajout des règles de validation à StorePostRequest
+    - Mise à jour du PostAttachment (Model)
+    - Ajout des fichiers cotés backend via le Controller
+    - Création de PostAttachmentResource et modif de PostRessource
+    - Ajustement du rendu de PostItem
     - TODO : Améliorer les visuels (icône type de fichier) lors de l'upload
+    - TODO : Prendre en charge plus de types de fichiers (StorePostRequest)
+    - TODO : Pour tous les formulaires tester et gérer les erreurs
 
