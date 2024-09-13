@@ -1,11 +1,9 @@
-Php version
-laravel version
-ide and version
-base de données
-
 dépendances ajoutées :
 laravel breeze
 spatie sluggable
+headlessui
+heroicons
+ckeditor5
 
 outils utilisés :
 ide
@@ -69,5 +67,9 @@ mailpit
     - backend : autorisation d'update et règles de validation (certains ajouts à celui de StorePostRequest)
     - backend : update en DB et en Storage 
     - Modification du model PostAttachment pour que synchroniser les suppressions DB - Storage
-    - Création d'une route dédié au téléchargement des fichierq du disque avec un nom personnalisé (nom d'origine dans la DB)
+    - Création d'une route dédié au téléchargement des fichiers du disque avec un nom personnalisé (nom d'origine dans la DB)
 
+12. Preview Post Attachments
+    - Création d'un composant modal dédié au Preview
+    - Transfert de données PostItem > PostList > AttachmentPreviewModal
+    - A quoi sert réellement le computed(), emit(), le v-model et l'interaction pour un two-way binding ?
