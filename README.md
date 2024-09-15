@@ -73,3 +73,9 @@ mailpit
     - Création d'un composant modal dédié au Preview
     - Transfert de données PostItem > PostList > AttachmentPreviewModal
     - A quoi sert réellement le computed(), emit(), le v-model et l'interaction pour un two-way binding ?
+
+13. Show validation errors
+    - Passer les extensions acceptés depuis le backend grace au HandleInertiaRequest
+    - Completer les formulaires d'envois pour capturer et afficher les erreurs
+    - Mettre en place un système de warning lors de l'upload de nouveaux fichiers
+
