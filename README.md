@@ -79,3 +79,7 @@ mailpit
     - Completer les formulaires d'envois pour capturer et afficher les erreurs
     - Mettre en place un système de warning lors de l'upload de nouveaux fichiers
 
+14. Configuration pour les uploads
+    - Modifier le fichier php.ini pour augmenter : upload_max_filesize, max_file_uploads et post_max_size
+    - changement des règles de validation du StorePostRequest
+    - Mise à jour de l'affichage des erreurs 

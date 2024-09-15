@@ -42,7 +42,7 @@ const attachmentExtensions = usePage().props.attachmentExtensions;
  */
 const attachmentFiles = ref([])
 const attachmentErrors = ref([])
-const showExtensionsText = ref(false)
+const formErrors = ref({});
 
 const show = computed({
     get: () => props.modelValue,
@@ -51,6 +51,19 @@ const show = computed({
 
 const computedAttachments = computed(() => {
     return [...(props.post.attachments || []), ...attachmentFiles.value]
+})
+
+const showExtensionsText = computed(() => {
+    for (let myFile of attachmentFiles.value) {
+        const file = myFile.file
+        let parts = file.name.split('.')
+        let ext = parts.pop().toLowerCase()
+        if (!attachmentExtensions.includes(ext)) {
+            return true
+        }
+    }
+
+    return false;
 })
 
 const emit = defineEmits(["update:modelValue", "hide"]);
@@ -63,8 +76,8 @@ function closeModal() {
 
 function resetModal() {
     form.reset()
+    formErrors.value = {}
     attachmentFiles.value = []
-    showExtensionsText.value = false
     attachmentErrors.value = []
     props.post.attachments.forEach(file => file.deleted = false)
 }
@@ -100,6 +113,7 @@ function submit() {
 }
 
 function processErrors(errors) {
+    formErrors.value = errors
     for (const key in errors) {
         if (key.includes('.')) {
             const [, index] = key.split('.')
@@ -116,7 +130,6 @@ async function onAttachmentChoose($event) {
             url: await readFile(file)
         }
         attachmentFiles.value.push(myFile)
-        showExtensionsText.value = checkFilesType()
     }
     $event.target.value = null;
 }
@@ -136,21 +149,9 @@ async function readFile(file) {
     })
 }
 
-function checkFilesType() {
-    for (const myFile of attachmentFiles.value) {
-        let parts = myFile.file.name.split('.')
-        let ext = parts.pop().toLowerCase()
-        if (!attachmentExtensions.includes(ext)) {
-            return true;
-        }
-    }
-    return false
-}
-
 function removeFile(myFile) {
     if (myFile.file) {
         attachmentFiles.value = attachmentFiles.value.filter(f => f !== myFile)
-        showExtensionsText.value = checkFilesType()
     } else {
         form.deleted_file_ids.push(myFile.id)
         myFile.deleted = true
@@ -195,6 +196,11 @@ function undoDelete(myFile) {
                                         class="border-l-4 border-amber-500 py-2 px-3 bg-amber-100 mt-3 text-gray-800">
                                         Uploaded Files must have one of the following extensions <br>
                                         <small>{{ attachmentExtensions.join(', ') }}</small>
+                                    </div>
+
+                                    <div v-if="formErrors.attachments"
+                                        class="border-l-4 border-red-500 py-2 px-3 bg-red-100 mt-3 text-gray-800">
+                                        {{ formErrors.attachments }}
                                     </div>
 
                                     <div class="grid gap-3 my-3" :class="[
