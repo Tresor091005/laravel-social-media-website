@@ -83,3 +83,27 @@ mailpit
     - Modifier le fichier php.ini pour augmenter : upload_max_filesize, max_file_uploads et post_max_size
     - changement des règles de validation du StorePostRequest
     - Mise à jour de l'affichage des erreurs 
+
+
+15. Réaction sur les posts
+    Ici on fait face à la problématique d'envoyer des requêtes au backend sans perdre l'affichage du frontend actuel
+    - Mise en place axios
+    - backend : 
+        - Enum pour la règle de validation concernant les types de reactions
+        - Models Post(relation) et PostReactions(fillable)
+        - Resource Post pour passer le nbr total de réactions et la présence de l'utilisateur
+        - HomeController pour ajouter la récupération du nombre total de réactions et la collection de la relation 'réactions' du modèle Post paramétrée sur l'utilisateur connecté
+        - PostController pour ajouter la méthode pour une réaction et renvoyant correctment le nbr total de réactions et la présence de l'utilisateur pour le post visé
+    - frontend :
+        - Utilisation de axios pour contacter le backend et mettre à jour les données du post(frontend)
+
+    
+    Pour implémenter plusieurs types de réaction
+        - Enum : ennumérer les types de réactions
+        - Model Post : relation personnalisé par type avec la table post_réaction
+        - Modification du front(PostItem) et de PostResource qui fournit les informations sur le Post
+        - Adaptation du HomeController pour aider le PostRessource
+        - Modification de la logique du PostController pour gérer au mieux les changements et les renvoyés au front
+        - Utilisation de axios pour mettre à jour les données côté front
+
+16. 
