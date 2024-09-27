@@ -45,7 +45,6 @@ mailpit
 9. CKEditor
     - installation de ckeditor pour vue (démarche sur la page officielle)
     - mettre à jour le css pour faire correspondre le style de l'écriture et du rendu de l'éditeur
-    - PROBLEME : lors de la fermeture et de la rouverture de la même modal (PostModal > PostList) les données ne sont pas réinitialisés
     - PROBLEME : la condition du read more / read less par rapport aux listes
 
 10. Attachments upload on post creation
@@ -106,4 +105,19 @@ mailpit
         - Modification de la logique du PostController pour gérer au mieux les changements et les renvoyés au front
         - Utilisation de axios pour mettre à jour les données côté front
 
-16. 
+16. Création de commentaires sur les postes
+
+    - frontend :
+        - Utilisation d'un Disclosure Panel pour créer une zone réservés aux commentaires
+        - Affichage des commentaires (notamment avec un ReadMoreLess)
+        - TextArea pour saisir le nouveau commentaire à créer
+
+    - backend :
+        - Création d'une route et d'une méthode de controller pour permettre la création d'un commentaire
+        - Mise à jour des models Post et Comment pour permettre l'enrégistrement de données (Model::create([])) et relations avec les autres modelès
+        - Mise à jour PostResource / Création CommentaireResource pour fournir les données nécéssaires aux Commentaires sur les Postes
+        - Intégration de la liste des commentaires et du nombre dans les données envoyés via le HomeController
+
+    PROBLEME : impossible de télécharger tous les fichiers attachés à un post lorsque leur nombre depasse 4
+
+17. 

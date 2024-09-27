@@ -24,8 +24,12 @@ Route::middleware('auth')->group(function () {
     Route::put('/post/{post}', [PostController::class, 'update'])->name('post.update');
     Route::delete('/post/{post}', [PostController::class, 'destroy'])->name('post.destroy');
     Route::get('/post/download/{attachment}', [PostController::class, 'downloadAttachment'])->name('post.download');
+
     // POST REACTIONS
     Route::POST('/post/{post}/reaction', [PostController::class, 'postReaction'])->name('post.reaction');
+
+    // POST COMMENTS
+    Route::POST('/post/{post}/comment', [PostController::class, 'createComment'])->name('post.comment.create');
 
     // REFERS TO USER PROFILE INFORMATIONS
     Route::post('/profile/update-images', [ProfileController::class, 'updateImage'])->name('profile.updateImages');
