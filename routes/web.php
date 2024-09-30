@@ -30,6 +30,8 @@ Route::middleware('auth')->group(function () {
 
     // POST COMMENTS
     Route::POST('/post/{post}/comment', [PostController::class, 'createComment'])->name('post.comment.create');
+    Route::delete('/comment/{comment}', [PostController::class, 'deleteComment'])->name('post.comment.delete');
+    Route::put('/comment/{comment}', [PostController::class, 'updateComment'])->name('post.comment.update');
 
     // REFERS TO USER PROFILE INFORMATIONS
     Route::post('/profile/update-images', [ProfileController::class, 'updateImage'])->name('profile.updateImages');

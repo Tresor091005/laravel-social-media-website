@@ -120,4 +120,14 @@ mailpit
 
     PROBLEME : impossible de télécharger tous les fichiers attachés à un post lorsque leur nombre depasse 4
 
-17. 
+17. Mise à jour et supression des commentaires
+
+    - frontend: 
+        - creation d'un composant dropdown, d'une section d'édition de commentaire
+        - mise en place des fonctions au clics d'éditon/supression qui modifie convenablement en retour la liste des commentaires
+    - backend: 
+        - création des routes et méthodes d'édition/supression de commentaire (en veillant sur l'autorisation)
+
+    PROBLEME : N'importe qui peut télécharger n'importe quel fichier attaché à un post en tapant son url
+
+18. 
