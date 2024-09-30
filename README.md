@@ -22,8 +22,10 @@ mailpit
 
 4. Frontend : Definition de la structure de la page principale
     - Défilement multiple et responsivité
+
 5. Frontend : User profile page
     - point important > faire attention au rendu des utilisateurs non connectés
+
 6. Upload de l'avatar et de la couverture du profile page :
 
     - lecture d'un fichier niveau frontend
@@ -35,6 +37,7 @@ mailpit
 7. Création d'un post et affichage
     - Modification du Model Post pour y établir les relations
     - Affichage de la liste de post à partir d'une collection de PostRessource
+
 8. Mise à jour et suppression d'un post
 
     - Mise en place d'une boite modale PostModal et découverte de fonction Vuejs : emit, computed, watch
@@ -83,7 +86,6 @@ mailpit
     - changement des règles de validation du StorePostRequest
     - Mise à jour de l'affichage des erreurs 
 
-
 15. Réaction sur les posts
     Ici on fait face à la problématique d'envoyer des requêtes au backend sans perdre l'affichage du frontend actuel
     - Mise en place axios
@@ -130,4 +132,14 @@ mailpit
 
     PROBLEME : N'importe qui peut télécharger n'importe quel fichier attaché à un post en tapant son url
 
-18. 
+18. Implementer les réactions sur les commentaires
+    - Modification de la table post_reactions en reactions
+    - Relation Polymorphique entre Reaction - Post/Comment (One to Many)
+    - Fixer les bugs créés
+    - Implementer les réactions sur les commentaires (mentions spécial au chargement du nombre de réactions sur chaque commentaire d'un post en parallèles à celui du post lui-même xD)
+
+    NOTE : Il n'est pas conseillé d'utiliser les modèles dans les migrations
+
+19.
+
+    Note : Dans le cas d'une relation avec lui même, la nouvelle colonne de liaison doit avoir les mêmes propriétés que la colonne référence (table comments : id - parent_id)
