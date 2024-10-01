@@ -140,7 +140,7 @@ mailpit
 
     NOTE : Il n'est pas conseillé d'utiliser les modèles dans les migrations
 
-19.
+19. Ecrire des sous commentaires
 
     NOTE : Dans le cas d'une relation avec lui même, la nouvelle colonne de liaison doit avoir les mêmes propriétés que la colonne référence (table comments : id - parent_id)
 
@@ -150,5 +150,8 @@ mailpit
     
         - NOTE : on ne peut modifier un props.Array mais on peut modifier les propriétés d'un props.Object
     
-    -backend : 
+    - backend : 
         - Mise à jour du chargement et de la gestion (création, update, delete) des Commentaires
+        
+20. 
+
