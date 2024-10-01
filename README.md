@@ -152,6 +152,8 @@ mailpit
     
     - backend : 
         - Mise à jour du chargement et de la gestion (création, update, delete) des Commentaires
+
+    TODO : Penser aux rendus sur plusieurs appareils / navigateurs à la Fin du projet
         
 20. 
 
