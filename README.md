@@ -143,3 +143,5 @@ mailpit
 19.
 
     Note : Dans le cas d'une relation avec lui même, la nouvelle colonne de liaison doit avoir les mêmes propriétés que la colonne référence (table comments : id - parent_id)
+
+    
