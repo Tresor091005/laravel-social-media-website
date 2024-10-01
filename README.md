@@ -142,6 +142,13 @@ mailpit
 
 19.
 
-    Note : Dans le cas d'une relation avec lui même, la nouvelle colonne de liaison doit avoir les mêmes propriétés que la colonne référence (table comments : id - parent_id)
+    NOTE : Dans le cas d'une relation avec lui même, la nouvelle colonne de liaison doit avoir les mêmes propriétés que la colonne référence (table comments : id - parent_id)
 
+    - frontend : 
+        - Création d'un composant CommentList pour afficher la liste des commentaires 
+            Ce composant à un caractère récursif afin d'afficher la liste des sous commentaires
     
+        - NOTE : on ne peut modifier un props.Array mais on peut modifier les propriétés d'un props.Object
+    
+    -backend : 
+        - Mise à jour du chargement et de la gestion (création, update, delete) des Commentaires
