@@ -155,5 +155,17 @@ mailpit
 
     TODO : Penser aux rendus sur plusieurs appareils / navigateurs à la Fin du projet
         
-20. 
+20. Chargement 'infini' de posts
 
+    En vrai il s'agit de l'utilisation de la methode Paginate sur L'Eloquent Query Builder combiné à l'utilisation d'un Resource
+
+    Le principe est de charger une page et en fin de défilement, une requête axios permet d'appeler la prochaine page (next). Cela nécéssitant l'accès à la variable contenant le prochain lien, il est passé à PostList; dans Home; posts(Object) au lieu de post.data(Array) {voir Home.vue}
+
+    PROBLEME : Lors de la suppression d'un commentaire parent, les enfants ne peuvent plus être rendus mais ils sont comptés en général
+
+    PROBLEME : Lors de la création, la modification ou la supression d'un post, un rechargement est nécéssaire pour constater les changements
+
+    DIVERGENCE : 
+    Au lieu d'utiliser page  = usePage() et tout ce qui va avec dans PostList.vue (ceci rend inutile la présence de props = defineProps), j'ai préféré continuer avec props en passant directement tout l'objet posts à PostList.vue à travers Home.vue au lieu de posts.data
+
+21. 
