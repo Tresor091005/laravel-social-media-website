@@ -168,4 +168,8 @@ mailpit
     DIVERGENCE : 
     Au lieu d'utiliser page  = usePage() et tout ce qui va avec dans PostList.vue (ceci rend inutile la présence de props = defineProps), j'ai préféré continuer avec props en passant directement tout l'objet posts à PostList.vue à travers Home.vue au lieu de posts.data
 
-21. 
+21. Création d'un groupe
+    - Création d'une modale dans GroupList.vue avec envoi du formulaire de création
+    - Création des route, controller, requests, ressource et modifications des Modèles Group et GroupUser pour l'enrégistrement du groupe et de son premier membre 
+    
+22. 
