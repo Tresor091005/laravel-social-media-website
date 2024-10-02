@@ -172,4 +172,12 @@ mailpit
     - Création d'une modale dans GroupList.vue avec envoi du formulaire de création
     - Création des route, controller, requests, ressource et modifications des Modèles Group et GroupUser pour l'enrégistrement du groupe et de son premier membre 
     
-22. 
+22. Afficher la liste des groupes sur la page d'acceuil
+    - Requête dans HomeController(avec GroupResource) pour récupérer la liste des groupes de l'utilisateur actuel avec son statut et son role dans le groupe
+    - S'assurer du rendu de l'Array renvoyé au front Home.vue > GroupList > GroupListItems > GroupItem 
+    - Faire le rendu du groupe créé avec la GroupModal (légère modif de GroupController pour envoyer le role et le status)
+
+    TODO : Gestion des onDelete dans la base de données
+
+
+23. 

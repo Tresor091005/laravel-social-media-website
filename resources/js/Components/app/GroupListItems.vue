@@ -7,6 +7,14 @@ import GroupModal from "@/Components/app/GroupModal.vue";
 
 const searchKeyword = ref('')
 const showNewGroupModal = ref(false)
+
+const props = defineProps({
+    groups: Array
+})
+
+function onGroupCreate(group) {
+    props.groups.unshift(group)
+}
 </script>
 
 <template>
@@ -18,61 +26,15 @@ const showNewGroupModal = ref(false)
         </button>
     </div>
     <div class="mt-3 h-[200px] lg:flex-1 overflow-auto">
-        <div v-if="false" class="text-gray-400 text-center p-3">
+        <div v-if="!groups.length" class="text-gray-400 text-center p-3">
             You are not joined to any groups
         </div>
         <div v-else>
-            <GroupItem
-                image="http://localhost:8000/storage/909-100x100.jpg"
-                title="Laravel developers"
-                description="lorem ipsum dolor sit amet, consectetur elit."
-            />
-
-            <GroupItem
-                image="http://localhost:8000/storage/909-100x100.jpg"
-                title="Vue.js developers"
-                description="lorem ipsum dolor sit amet, consectetur elit."
-            />
-
-            <GroupItem
-                image="http://localhost:8000/storage/909-100x100.jpg"
-                title="React developers"
-                description="lorem ipsum dolor sit amet, consectetur elit."
-            />
-
-            <GroupItem
-                image="http://localhost:8000/storage/909-100x100.jpg"
-                title="Python developers"
-                description="lorem ipsum dolor sit amet, consectetur elit."
-            />
-
-            <GroupItem
-                image="http://localhost:8000/storage/909-100x100.jpg"
-                title="C++ developers"
-                description="lorem ipsum dolor sit amet, consectetur elit."
-            />
-
-            <GroupItem
-                image="http://localhost:8000/storage/909-100x100.jpg"
-                title="Ruby developers"
-                description="lorem ipsum dolor sit amet, consectetur elit."
-            />
-
-            <GroupItem
-                image="http://localhost:8000/storage/909-100x100.jpg"
-                title="Kotlin developers"
-                description="lorem ipsum dolor sit amet, consectetur elit."
-            />
-
-            <GroupItem
-                image="http://localhost:8000/storage/909-100x100.jpg"
-                title="Swift developers"
-                description="lorem ipsum dolor sit amet, consectetur elit."
-            />
+            <GroupItem v-for="group of groups" :group="group" :key="group.id"/>
         </div>
     </div>
 
-    <GroupModal v-model="showNewGroupModal"/>
+    <GroupModal v-model="showNewGroupModal" @create="onGroupCreate"/>
 </template>
 
 <style scoped>
