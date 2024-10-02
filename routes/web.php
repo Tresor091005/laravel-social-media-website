@@ -15,9 +15,9 @@ Route::get('/', [HomeController::class, 'index'])
     ->middleware(['auth', 'verified'])
     ->name('home');
 
-// USER PROFILE PAGE
-Route::get('/u/{user:username}', [ProfileController::class, 'index'])
-    ->name('profile');
+// PROFILE PAGES
+Route::get('/u/{user:username}', [ProfileController::class, 'index'])->name('profile');
+Route::get('/g/{group:slug}', [GroupController::class, 'profile'])->name('group.profile');
 
 Route::middleware('auth')->group(function () {
     // POSTS
@@ -35,6 +35,7 @@ Route::middleware('auth')->group(function () {
 
     // GROUPS
     Route::post('/group', [GroupController::class, 'store'])->name('group.create');
+    Route::post('/group/update-images/{group:slug}', [GroupController::class, 'updateImage'])->name('group.updateImages');
 
     // REFERS TO USER PROFILE INFORMATIONS
     Route::post('/profile/update-images', [ProfileController::class, 'updateImage'])->name('profile.updateImages');

@@ -180,4 +180,6 @@ mailpit
     TODO : Gestion des onDelete dans la base de données
 
 
-23. 
+23. Groupe Profile Page
+
+    - Création du group profile page en se basant sur le user profile page (route, controller, resource, model)

@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class GroupResource extends JsonResource
@@ -15,14 +16,16 @@ class GroupResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        $thumbnailUrl = $this->thumbnail_path ? Storage::url($this->thumbnail_path) : '/img/no_image.png';
+        $coverUrl = $this->cover_path ? Storage::url($this->cover_path) : null;
         return [
             'id' => $this->id,
             'name' => $this->name,
             'slug' => $this->slug,
-            'status' => $this->status,
-            'role' => $this->role,
-            'thumbnail_url' => 'http://localhost:8000/storage/909-100x100.jpg',
-//            'thumbnail_path' => $this->thumbnail_path,
+            'status' => $this->currentUserGroup?->status,
+            'role' => $this->currentUserGroup?->role,
+            'thumbnail_url' => $thumbnailUrl,
+            'cover_url' => $coverUrl,
             'auto_approval' => $this->auto_approval,
             'about' => $this->about,
             'description' => Str::words($this->about, 10),
