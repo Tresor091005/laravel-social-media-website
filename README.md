@@ -219,4 +219,6 @@ mailpit
     - capture et gestion de la requête de changement et notification de l'utilisateur
     - important : Le créateur du groupe est intouchable
 
-    - 
+    - créer une section dans Group/View.vue pour mettre à jour les informations (name, auto approval et about) du groupe
+
+28. 

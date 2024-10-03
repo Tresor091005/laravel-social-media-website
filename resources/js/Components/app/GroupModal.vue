@@ -7,6 +7,7 @@ import TextInput from "@/Components/TextInput.vue";
 import Checkbox from "@/Components/Checkbox.vue";
 import InputTextarea from "@/Components/InputTextarea.vue";
 import axiosClient from "@/axiosClient.js";
+import GroupForm from "@/Components/app/GroupForm.vue";
 
 const props = defineProps({
     modelValue: Boolean
@@ -46,7 +47,11 @@ function submit() {
         })
         .catch(({response}) => {
             console.clear()
-            formErrors.value = response.data.errors
+            let errors = {}
+            for(const key in response.data.errors) {
+                errors[key] = response.data.errors[key][0]
+            }
+            formErrors.value = errors
         })
 }
 
@@ -95,50 +100,8 @@ function submit() {
                                     </button>
                                 </DialogTitle>
                                 <div class="p-4">
-                                    <div class="mb-3">
-                                        <label>Group Name</label>
-                                        <TextInput
-                                            type="text"
-                                            class="mt-1 block w-full"
-                                            v-model="form.name"
-                                            required
-                                            autofocus
-                                        />
 
-                                        <div v-if="formErrors.name"
-                                            class="mt-1"
-                                            :class="formErrors.name ? 'text-red-500' : ''"
-                                        >
-                                            {{ formErrors.name[0] }}
-                                        </div>
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label>
-                                            <Checkbox name="remember" v-model:checked="form.auto_approval"/>
-                                            Enable Auto Approval
-                                        </label>
-
-                                        <div v-if="formErrors.auto_approval"
-                                            class="mt-1"
-                                            :class="formErrors.auto_approval ? 'text-red-500' : ''"
-                                        >
-                                            {{ formErrors.auto_approval[0] }}
-                                        </div>
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label>About Group</label>
-
-                                        <InputTextarea v-model="form.about" class="w-full"/>
-
-                                        <div v-if="formErrors.about"
-                                            class="mt-1"
-                                            :class="formErrors.about ? 'text-red-500' : ''"
-                                        >
-                                            {{ formErrors.about[0] }}
-                                        </div>
-                                    </div>
+                                    <GroupForm :form="form" :form-errors="formErrors" />
 
                                 </div>
 

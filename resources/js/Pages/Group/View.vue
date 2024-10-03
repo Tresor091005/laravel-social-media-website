@@ -10,6 +10,7 @@ import PrimaryButton from "@/Components/PrimaryButton.vue";
 import InviteUserModal from "@/Pages/Group/InviteUserModal.vue";
 import UserListItem from "@/Components/app/UserListItem.vue";
 import TextInput from "@/Components/TextInput.vue";
+import GroupForm from "@/Components/app/GroupForm.vue";
 
 const imagesForm = useForm({
     thumbnail: null,
@@ -39,12 +40,20 @@ const props = defineProps({
 const authUser = usePage().props.auth.user;
 const isCurrentUserAdmin = computed(() => props.group.role === 'admin')
 const isJoinedToGroup = computed(() => props.group.role && props.group.status === 'approved')
-const isJoinRequestPending =computed(() => props.group.status === 'pending')
+const isJoinRequestPending = computed(() => props.group.status === 'pending')
+const isAutoApprovalDisabled = computed(() => !props.group.auto_approval)
 
 const coverImageSrc = ref('')
 const thumbnailImageSrc = ref('')
 const showInviteUserModal = ref(false);
 const searchKeyword = ref('');
+
+const aboutFormErrors = ref({});
+const aboutForm = useForm({
+    name: props.group.name,
+    auto_approval: !!parseInt(props.group.auto_approval),
+    about: props.group.about
+})
 
 function onCoverChange(event) {
     imagesForm.cover = event.target.files[0]
@@ -144,6 +153,15 @@ function onRoleChange(user, role) {
     })
 }
 
+function updateGroup(){
+    aboutForm.put(route('group.update', props.group.slug), {
+        preserveScroll: true,
+        onError: (errors) => {
+            aboutFormErrors.value = errors
+        }
+    })
+}
+
 </script>
 
 <template>
@@ -232,7 +250,7 @@ function onRoleChange(user, role) {
                             <h2 class="font-bold text-lg mb-3 sm:mb-0">{{ group.name }}</h2>
                             <div v-if="isJoinRequestPending">Request pending</div>
                             <template v-if="authUser">
-                                <PrimaryButton v-if="isCurrentUserAdmin"
+                                <PrimaryButton v-if="isCurrentUserAdmin && isAutoApprovalDisabled"
                                             @click="showInviteUserModal = true"
                                 >
                                     Invite Users
@@ -270,6 +288,9 @@ function onRoleChange(user, role) {
                         <Tab v-slot="{ selected }" as="template">
                             <TabItem text="Photos" :selected="selected"/>
                         </Tab>
+                        <Tab v-if="isCurrentUserAdmin" v-slot="{ selected }" as="template">
+                            <TabItem text="About" :selected="selected"/>
+                        </Tab>
                     </TabList>
 
                     <TabPanels class="mt-2">
@@ -306,6 +327,12 @@ function onRoleChange(user, role) {
                         </TabPanel>
                         <TabPanel class="bg-white p-3 shadow">
                             Photos
+                        </TabPanel>
+                        <TabPanel v-if="isCurrentUserAdmin" class="bg-white p-3 shadow">
+                            <GroupForm :form="aboutForm" :form-errors="aboutFormErrors" />
+                            <PrimaryButton @click="updateGroup">
+                                Submit
+                            </PrimaryButton>
                         </TabPanel>
                     </TabPanels>
                 </TabGroup>

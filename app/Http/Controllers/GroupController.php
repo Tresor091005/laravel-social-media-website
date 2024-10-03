@@ -86,7 +86,10 @@ class GroupController extends Controller
      */
     public function update(UpdateGroupRequest $request, Group $group)
     {
-        //
+        $group->update($request->validated());
+        // TODO : notification to group admins
+
+        return back()->with('notification', "Group was updated");
     }
 
     /**
