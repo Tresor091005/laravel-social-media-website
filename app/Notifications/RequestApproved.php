@@ -9,14 +9,14 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class RequestToJoinGroup extends Notification
+class RequestApproved extends Notification
 {
     use Queueable;
 
     /**
      * Create a new notification instance.
      */
-    public function __construct(public Group $group, public User $user)
+    public function __construct(public Group $group, public User $user, public bool $approved)
     {
         //
     }
@@ -36,10 +36,13 @@ class RequestToJoinGroup extends Notification
      */
     public function toMail(object $notifiable): MailMessage
     {
-        return (new MailMessage)
-                    ->line('User "'.$this->user->name.'" requested to join to group "'.$this->group->name.'"')
-                    ->action('See Request', url(route('group.profile', $this->group)))
-                    ->line('Thank you for using our application!');
+        $action = $this->approved ? 'approved' : 'rejected' ;
+
+        return ( new MailMessage )
+            ->subject('Request was ' . $action)
+            ->line('Your request to join to group "' . $this->group->name . '" has been ' . $action)
+            ->action('Open Group', url(route('group.profile', $this->group)))
+            ->line('Thank you for using our application!');
     }
 
     /**

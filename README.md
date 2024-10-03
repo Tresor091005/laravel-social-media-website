@@ -201,5 +201,15 @@ mailpit
 
 25. Demander / Rejoindre un groupe (utilisateur)
 
-    - Demande frontend (Group/View.vue) à la route 
+    - Demande faite par le frontend (Group/View.vue) à la route 
     - vérification du statut auto_approval du groupe et actions
+
+
+26. Accepter et Rejeter les demandes en attente (admin)
+
+    - affichage dans (Group/View.vue) des membres et requêtes du groupe
+    - gestion de l'acceptation ou rejet avec envoie de notif à l'utilisateur via le Controller
+
+    TODO : Il reste la possibilité de laisser l'utilisateur refuser l'offre de l'admin pour finir avec la gestion de l'accès au groupe
+
+27. 
