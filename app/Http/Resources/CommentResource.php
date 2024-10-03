@@ -15,7 +15,7 @@ class CommentResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        $avatarUrl = $this->user->avatar_path ? Storage::url($this->user->avatar_path) : null;
+        $avatarUrl = $this->user->avatar_path ? Storage::url($this->user->avatar_path) : "/img/default_avatar.webp";
 
         return [
             "id"=> $this->id,

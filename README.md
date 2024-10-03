@@ -1,11 +1,13 @@
-dépendances ajoutées :
-laravel breeze
-spatie sluggable
-headlessui
-heroicons
-ckeditor5
+Dépendances ajoutées :
+Laravel : laravel breeze
+Laravel : spatie sluggable
+dev: laravel-debugbar
 
-outils utilisés :
+Npm : headlessui
+Npm : heroicons
+Npm : ckeditor5
+
+Outils utilisés :
 ide
 navigateur
 mailpit
@@ -184,4 +186,17 @@ mailpit
 
     - Création du group profile page en se basant sur le user profile page (route, controller, resource, model)
 
-24. 
+24. Inviter à rejoindre un groupe
+    - Premiere partie : Envoyer une invitation à rejoindre un groupe
+        - créer la modale en frontend puis envoyé les données sur la nouvelle route réservé
+        - validation correcte, création de l'enrégistrement en DB, notification par email et renvoie de message au frontend
+
+        - Découverte de Notification type mail dans Laravel 
+
+        NOTE : utilisation de Str pour générer unec chaine de caractères aléatoire, anciennement une sous chaîne d'une passée en paramètre; Utilisation de Carbon pour générer une date
+
+    - Deuxième partie : Accepter l'invitation
+        - route basé sur le token
+        - verification et redirection/envoie mail aux deux acteurs
+
+25. 

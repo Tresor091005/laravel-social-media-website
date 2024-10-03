@@ -5,8 +5,9 @@ import {TabGroup, TabList, Tab, TabPanels, TabPanel} from '@headlessui/vue'
 import {usePage} from "@inertiajs/vue3";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import TabItem from "@/Pages/Profile/Partials/TabItem.vue";
-import {useForm} from '@inertiajs/vue3'
+import {Head, useForm} from '@inertiajs/vue3'
 import PrimaryButton from "@/Components/PrimaryButton.vue";
+import InviteUserModal from "@/Pages/Group/InviteUserModal.vue";
 
 const imagesForm = useForm({
     thumbnail: null,
@@ -36,6 +37,7 @@ const isCurrentUserAdmin = computed(() => props.group.role === 'admin')
 
 const coverImageSrc = ref('')
 const thumbnailImageSrc = ref('')
+const showInviteUserModal = ref(false);
 
 function onCoverChange(event) {
     imagesForm.cover = event.target.files[0]
@@ -98,6 +100,9 @@ function submitThurmbnailImage() {
 </script>
 
 <template>
+
+    <Head title="Group" />
+
     <AuthenticatedLayout>
         <div class="max-w-[768px] mx-auto h-full overflow-auto">
             <div v-show="showNotification && props.notification"
@@ -178,9 +183,15 @@ function submitThurmbnailImage() {
                     <div class="flex justify-between items-center flex-1 p-4">
                         <h2 class="font-bold text-lg">{{ group.name }}</h2>
 
-                        <PrimaryButton v-if="isCurrentUserAdmin">Invite Users</PrimaryButton>
-                        <PrimaryButton v-if="!group.role && group.auto_approval">Join to Group</PrimaryButton>
-                        <PrimaryButton v-if="!group.role && !group.auto_approval">Request to join</PrimaryButton>
+                        <template v-if="authUser">
+                            <PrimaryButton v-if="isCurrentUserAdmin"
+                                        @click="showInviteUserModal = true"
+                            >
+                                Invite Users
+                            </PrimaryButton>
+                            <PrimaryButton v-if="!group.role && group.auto_approval">Join to Group</PrimaryButton>
+                            <PrimaryButton v-if="!group.role && !group.auto_approval">Request to join</PrimaryButton>
+                        </template>
                     </div>
                 </div>
             </div>
@@ -219,6 +230,7 @@ function submitThurmbnailImage() {
             </div>
         </div>
     </AuthenticatedLayout>
+    <InviteUserModal v-model="showInviteUserModal" :group-slug="group.slug" />
 </template>
 
 <style scoped>

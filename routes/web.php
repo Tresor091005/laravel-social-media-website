@@ -19,6 +19,8 @@ Route::get('/', [HomeController::class, 'index'])
 Route::get('/u/{user:username}', [ProfileController::class, 'index'])->name('profile');
 Route::get('/g/{group:slug}', [GroupController::class, 'profile'])->name('group.profile');
 
+Route::get('/group/approve-invitation/{token}', [GroupController::class, 'approveInvitation'])->name('group.approveInvitation');
+
 Route::middleware('auth')->group(function () {
     // POSTS
     Route::post('/post', [PostController::class, 'store'])->name('post.create');
@@ -36,6 +38,7 @@ Route::middleware('auth')->group(function () {
     // GROUPS
     Route::post('/group', [GroupController::class, 'store'])->name('group.create');
     Route::post('/group/update-images/{group:slug}', [GroupController::class, 'updateImage'])->name('group.updateImages');
+    Route::post('/group/invite/{group:slug}', [GroupController::class, 'inviteUsers'])->name('group.inviteUsers');
 
     // REFERS TO USER PROFILE INFORMATIONS
     Route::post('/profile/update-images', [ProfileController::class, 'updateImage'])->name('profile.updateImages');
