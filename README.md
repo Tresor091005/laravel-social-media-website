@@ -186,9 +186,9 @@ mailpit
 
     - Création du group profile page en se basant sur le user profile page (route, controller, resource, model)
 
-24. Inviter à rejoindre un groupe
+24. Inviter à rejoindre un groupe (admin)
     - Premiere partie : Envoyer une invitation à rejoindre un groupe
-        - créer la modale en frontend puis envoyé les données sur la nouvelle route réservé
+        - créer la modale en frontend (Group/InviteUserModal.vue) puis envoyé les données sur la nouvelle route réservé
         - validation correcte, création de l'enrégistrement en DB, notification par email et renvoie de message au frontend
 
         - Découverte de Notification type mail dans Laravel 
@@ -199,4 +199,7 @@ mailpit
         - route basé sur le token
         - verification et redirection/envoie mail aux deux acteurs
 
-25. 
+25. Demander / Rejoindre un groupe (utilisateur)
+
+    - Demande frontend (Group/View.vue) à la route 
+    - vérification du statut auto_approval du groupe et actions

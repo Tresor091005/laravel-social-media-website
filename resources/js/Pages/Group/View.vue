@@ -34,6 +34,7 @@ const props = defineProps({
 
 const authUser = usePage().props.auth.user;
 const isCurrentUserAdmin = computed(() => props.group.role === 'admin')
+const joinRequestIsPending =computed(() => props.group.status === 'pending')
 
 const coverImageSrc = ref('')
 const thumbnailImageSrc = ref('')
@@ -95,6 +96,12 @@ function submitThurmbnailImage() {
             triggerNotification()
         }
     })
+}
+
+function joinToGroup() {
+    const form = useForm({})
+
+    form.post(route('group.join', props.group.slug))
 }
 
 </script>
@@ -180,18 +187,29 @@ function submitThurmbnailImage() {
                             </div>
                         </template>
                     </div>
-                    <div class="flex justify-between items-center flex-1 p-4">
-                        <h2 class="font-bold text-lg">{{ group.name }}</h2>
-
+                    <div class="flex flex-col sm:flex-row sm:justify-between items-center flex-1 p-4">
+                        <h2 class="font-bold text-lg mb-3 sm:mb-0">{{ group.name }}</h2>
+                        <div v-if="joinRequestIsPending">Request pending</div>
                         <template v-if="authUser">
                             <PrimaryButton v-if="isCurrentUserAdmin"
                                         @click="showInviteUserModal = true"
                             >
                                 Invite Users
                             </PrimaryButton>
-                            <PrimaryButton v-if="!group.role && group.auto_approval">Join to Group</PrimaryButton>
-                            <PrimaryButton v-if="!group.role && !group.auto_approval">Request to join</PrimaryButton>
+                            <PrimaryButton v-if="!group.role && group.auto_approval"
+                                            @click="joinToGroup"
+                            >
+                                Join to Group
+                            </PrimaryButton>
+                            <PrimaryButton v-if="!group.role && !group.auto_approval"
+                                            @click="joinToGroup"
+                            >
+                                Request to join
+                            </PrimaryButton>
                         </template>
+                        <PrimaryButton v-else :href="route('login')">
+                            Login to join to this group
+                        </PrimaryButton>
                     </div>
                 </div>
             </div>
