@@ -44,6 +44,10 @@ function submit() {
             closeModal()
             emit('create', data)
         })
+        .catch(({response}) => {
+            console.clear()
+            formErrors.value = response.data.errors
+        })
 }
 
 </script>
@@ -100,6 +104,13 @@ function submit() {
                                             required
                                             autofocus
                                         />
+
+                                        <div v-if="formErrors.name"
+                                            class="mt-1"
+                                            :class="formErrors.name ? 'text-red-500' : ''"
+                                        >
+                                            {{ formErrors.name[0] }}
+                                        </div>
                                     </div>
 
                                     <div class="mb-3">
@@ -107,12 +118,26 @@ function submit() {
                                             <Checkbox name="remember" v-model:checked="form.auto_approval"/>
                                             Enable Auto Approval
                                         </label>
+
+                                        <div v-if="formErrors.auto_approval"
+                                            class="mt-1"
+                                            :class="formErrors.auto_approval ? 'text-red-500' : ''"
+                                        >
+                                            {{ formErrors.auto_approval[0] }}
+                                        </div>
                                     </div>
 
                                     <div class="mb-3">
                                         <label>About Group</label>
 
                                         <InputTextarea v-model="form.about" class="w-full"/>
+
+                                        <div v-if="formErrors.about"
+                                            class="mt-1"
+                                            :class="formErrors.about ? 'text-red-500' : ''"
+                                        >
+                                            {{ formErrors.about[0] }}
+                                        </div>
                                     </div>
 
                                 </div>

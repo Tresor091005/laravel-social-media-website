@@ -21,7 +21,6 @@ class GroupController extends Controller
      */
     public function profile(Group $group)
     {
-        $group->load('currentUserGroup');
         return Inertia::render('Group/View', [
             'notification' => session('notification'),
             'group' => new GroupResource($group)
@@ -46,8 +45,6 @@ class GroupController extends Controller
         ];
 
         GroupUser::create($groupUserData);
-        $group->status = $groupUserData['status'];
-        $group->role = $groupUserData['role'];
 
         return response(new GroupResource($group), 201);
     }
