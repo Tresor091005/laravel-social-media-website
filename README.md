@@ -212,4 +212,11 @@ mailpit
 
     TODO : Il reste la possibilité de laisser l'utilisateur refuser l'offre de l'admin pour finir avec la gestion de l'accès au groupe
 
-27. 
+27. Changer le rôle des utilisteurs
+
+    - affichage des roles des utilisateurs dans Group/View.vue
+    - requête de changement de role depuis le frontend
+    - capture et gestion de la requête de changement et notification de l'utilisateur
+    - important : Le créateur du groupe est intouchable
+
+    - 
