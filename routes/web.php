@@ -20,6 +20,7 @@ Route::get('/u/{user:username}', [ProfileController::class, 'index'])->name('pro
 Route::get('/g/{group:slug}', [GroupController::class, 'profile'])->name('group.profile');
 
 Route::get('/group/approve-invitation/{token}', [GroupController::class, 'approveInvitation'])->name('group.approveInvitation');
+Route::post('/group/approve-invitation/{group:slug}', [GroupController::class, 'acceptInvitation'])->name('group.acceptInvitation');
 
 Route::middleware('auth')->group(function () {
     // POSTS

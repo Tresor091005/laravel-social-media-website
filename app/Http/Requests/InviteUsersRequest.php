@@ -50,6 +50,10 @@ class InviteUsersRequest extends FormRequest
                 if ($this->groupUser && $this->groupUser->status === GroupUserStatus::APPROVED->value) {
                     $fail('User is already joined to the group');
                 }
+
+                if ($this->groupUser && $this->groupUser->status === GroupUserStatus::PENDING->value) {
+                    $fail('User has already ask to join to the group. Check Pending Requests tab');
+                }
             }]
         ];
     }

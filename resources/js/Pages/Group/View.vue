@@ -123,6 +123,14 @@ function joinToGroup() {
     })
 }
 
+function acceptToJoin() {
+    const form = useForm({})
+
+    form.post(route('group.acceptInvitation', props.group.slug), {
+        preserveScroll: true
+    })
+}
+
 function approveUser(user) {
     const form = useForm({
         user_id: user.id,
@@ -248,7 +256,6 @@ function updateGroup(){
                         </div>
                         <div class="flex flex-col sm:flex-row sm:justify-between items-center flex-1 p-4">
                             <h2 class="font-bold text-lg mb-3 sm:mb-0">{{ group.name }}</h2>
-                            <div v-if="isJoinRequestPending">Request pending</div>
                             <template v-if="authUser">
                                 <PrimaryButton v-if="isCurrentUserAdmin && isAutoApprovalDisabled"
                                             @click="showInviteUserModal = true"
@@ -260,13 +267,18 @@ function updateGroup(){
                                 >
                                     Join to Group
                                 </PrimaryButton>
-                                <PrimaryButton v-if="!group.role && !group.auto_approval"
+                                <PrimaryButton v-if="group.status == 'invited'"
+                                                @click="acceptToJoin"
+                                >
+                                    Accept invitation to join
+                                </PrimaryButton>
+                                <PrimaryButton v-if="(!group.role && !group.auto_approval) || isJoinRequestPending"
                                                 @click="joinToGroup"
                                 >
-                                    Request to join
+                                    {{ isJoinRequestPending ? "Update your " : "" }} Request to join
                                 </PrimaryButton>
                             </template>
-                            <PrimaryButton v-else :href="route('login')">
+                            <PrimaryButton v-else @click="joinToGroup">
                                 Login to join to this group
                             </PrimaryButton>
                         </div>
@@ -279,11 +291,11 @@ function updateGroup(){
                         <Tab v-slot="{ selected }" as="template">
                             <TabItem text="Posts" :selected="selected"/>
                         </Tab>
-                        <Tab v-if="isJoinedToGroup" v-slot="{ selected }" as="template">
+                        <Tab v-if="isJoinedToGroup" :number="{number: users.length}" v-slot="{ selected }" as="template">
                             <TabItem text="Users" :selected="selected"/>
                         </Tab>
                         <Tab v-if="isCurrentUserAdmin" v-slot="{ selected }" as="template">
-                            <TabItem text="Pending Requests" :selected="selected"/>
+                            <TabItem text="Pending Requests" :number="{number: requests.length}" :selected="selected"/>
                         </Tab>
                         <Tab v-slot="{ selected }" as="template">
                             <TabItem text="Photos" :selected="selected"/>

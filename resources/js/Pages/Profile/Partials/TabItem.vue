@@ -1,7 +1,11 @@
 <script setup>
 defineProps({
     selected: Boolean,
-    text: String
+    text: String,
+    number: {
+        type: Object,
+        default: {}
+    }
 })
 </script>
 
@@ -14,7 +18,7 @@ defineProps({
             : 'text-gray-700',
         ]"
     >
-        {{ text }}
+        {{ text }} {{ parseInt(number.number) + 1 > 0 ? " - " : ""}}  {{ number.number }}
     </button>
 </template>
 

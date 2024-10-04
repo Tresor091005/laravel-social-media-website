@@ -39,6 +39,7 @@ class Group extends Model
         return GroupUser::query()
             ->where('user_id', $userId)
             ->where('group_id', $this->id)
+            ->where('status', GroupUserStatus::APPROVED->value)
             ->where('role', GroupUserRole::ADMIN->value)
             ->exists();
     }

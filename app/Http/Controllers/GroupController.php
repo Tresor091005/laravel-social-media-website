@@ -40,6 +40,7 @@ class GroupController extends Controller
             ->orderBy('gu.role')
             ->orderBy('users.name')
             ->where('group_id', $group->id)
+            ->where('gu.status', GroupUserStatus::APPROVED->value)
             ->get();
         $requests = $group->pendingUsers()->orderBy('name')->get();
 
@@ -86,8 +87,20 @@ class GroupController extends Controller
      */
     public function update(UpdateGroupRequest $request, Group $group)
     {
-        $group->update($request->validated());
+        $data = $request->validated();
+        $group->update($data);
         // TODO : notification to group admins
+
+        if(!!$data["auto_approval"]) {
+            $groupUsersRejected = GroupUser::query()
+                ->where('group_id', $group->id)
+                ->where('status', GroupUserStatus::REJECTED->value)
+                ->get();
+
+            foreach($groupUsersRejected as $groupUser) {
+                $groupUser->delete();
+            }
+        }
 
         return back()->with('notification', "Group was updated");
     }
@@ -151,7 +164,7 @@ class GroupController extends Controller
         $token = Str::random(256);
 
         GroupUser::create([
-            'status' => GroupUserStatus::PENDING->value,
+            'status' => GroupUserStatus::INVITED->value,
             'role' => GroupUserRole::USER->value,
             'token' => $token,
             'token_expire_date' => Carbon::now()->addHours($hours),
@@ -197,17 +210,67 @@ class GroupController extends Controller
         return redirect(route('group.profile', $groupUser->group))->with('notification', 'You accepted to join to group "'.$groupUser->group->name.'"');
     }
 
+    public function acceptInvitation(Group $group)
+    {
+        $groupUser = GroupUser::query()
+            ->where('group_id', $group->id)
+            ->where('user_id', Auth::id())
+            ->where('status', GroupUserStatus::INVITED->value)
+            ->first();
+
+        $errorTitle = '';
+        if (!$groupUser) {
+            $errorTitle = 'The link is not valid';
+        } else if ($groupUser->token_used || $groupUser->status === GroupUserStatus::APPROVED->value) {
+            $errorTitle = 'The link is already used';
+        } else if ($groupUser->token_expire_date < Carbon::now()) {
+            $errorTitle = 'The link is expired';
+        }
+
+        if ($errorTitle) {
+            // TODO : Proper rendering
+            return \inertia('Error', ['title'=> $errorTitle]);
+        }
+
+        $groupUser->status = GroupUserStatus::APPROVED->value;
+        $groupUser->token_used = Carbon::now();
+        $groupUser->save();
+
+        $adminUser = $groupUser->adminUser;
+
+        $adminUser->notify(new InvitationApproved($groupUser->group, $groupUser->user));
+
+        return redirect(route('group.profile', $groupUser->group))->with('notification', 'You accepted to join to group "'.$groupUser->group->name.'"');
+    }
+
     public function join(Request $request, Group $group)
     {
         $user = $request->user();
 
+        if ($group->isOwner($user->id)) {
+            return back()->with('notification', 'The owner of a group cannot ask to join it');
+        }
+
+        $ancientDatas = GroupUser::query()
+            ->where('group_id', $group->id)
+            ->where('user_id', $user->id)
+            ->get();
+
+        foreach($ancientDatas as $ancientData){
+            $ancientData->delete();
+        }
+
         $status = GroupUserStatus::APPROVED->value;
         $successMessage = 'You have joined to group "' . $group->name . '"';
+
         if (!$group->auto_approval) {
             $status = GroupUserStatus::PENDING->value;
-
-            Notification::send($group->adminUsers, new RequestToJoinGroup($group, $user));
             $successMessage = 'Your request has been accepted. You will be notified once you will be approved';
+
+
+            if(!count($ancientDatas)){
+                Notification::send($group->adminUsers, new RequestToJoinGroup($group, $user));
+            }
         }
 
         GroupUser::create([
@@ -239,7 +302,7 @@ class GroupController extends Controller
 
         if ($groupUser) {
             $approved = false;
-            if ($data['action'] === 'approve') {
+            if ($data['action'] === 'approve' || $group->isOwner($data['user_id'])) {
                 $approved = true;
                 $groupUser->status = GroupUserStatus::APPROVED->value;
             } else {

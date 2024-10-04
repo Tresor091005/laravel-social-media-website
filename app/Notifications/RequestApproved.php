@@ -37,10 +37,11 @@ class RequestApproved extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         $action = $this->approved ? 'approved' : 'rejected' ;
+        $startText = !$this->approved ?'Sorry, y':'Y';
 
         return ( new MailMessage )
             ->subject('Request was ' . $action)
-            ->line('Your request to join to group "' . $this->group->name . '" has been ' . $action)
+            ->line($startText . 'our request to join to group "' . $this->group->name . '" has been ' . $action)
             ->action('Open Group', url(route('group.profile', $this->group)))
             ->line('Thank you for using our application!');
     }
