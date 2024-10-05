@@ -3,7 +3,7 @@
 import PostItem from "@/Components/app/PostItem.vue";
 import PostModal from "@/Components/app/PostModal.vue";
 import AttachmentPreviewModal from "@/Components/app/AttachmentPreviewModal.vue";
-import {onMounted, ref} from "vue";
+import {onMounted, ref, watch} from "vue";
 import {usePage} from "@inertiajs/vue3";
 import axiosClient from "@/axiosClient.js";
 
@@ -19,9 +19,18 @@ const props = defineProps({
 })
 
 const allPosts = ref({
-    data: props.posts.data,
-    next: props.posts.links.next
+    data: [],
+    next: null
 })
+
+watch(() => props.posts, () => {
+    if (props.posts) {
+        allPosts.value = {
+            data: props.posts.data,
+            next: props.posts.links.next
+        }
+    }
+}, {deep: true, immediate: true})
 
 function openEditModal(post) {
     editPost.value = post;

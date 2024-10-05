@@ -7,6 +7,7 @@ use App\Http\Enums\GroupUserStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Auth;
@@ -29,9 +30,23 @@ class Group extends Model
             ->doNotGenerateSlugsOnUpdate();
     }
 
+    public function groupUsers(): HasMany
+    {
+        return $this->hasMany(GroupUser::class);
+    }
+
     public function currentUserGroup(): HasOne
     {
         return $this->hasOne(GroupUser::class)->where('user_id', Auth::id());
+    }
+
+    public function hasApprovedUser($userId): bool
+    {
+        return GroupUser::query()
+            ->where('user_id', $userId)
+            ->where('group_id', $this->id)
+            ->where('status', GroupUserStatus::APPROVED->value)
+            ->exists();
     }
 
     public function isAdmin($userId): bool

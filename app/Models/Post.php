@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Http\Enums\GroupUserStatus;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -17,6 +19,7 @@ class Post extends Model
     protected $fillable = [
         'body',
         'user_id',
+        'group_id'
     ];
 
     public function user(): BelongsTo
@@ -42,5 +45,37 @@ class Post extends Model
     public function comments(): HasMany
     {
         return $this->hasMany(Comment::class)->latest();
+    }
+
+    public static function postsForTimeline($userId): Builder
+    {
+        return Post::query()
+        ->withCount('reactions')
+        ->with([
+            'comments' => function ($query) {
+                $query->withCount('reactions');
+            },
+            'reactions' => function ($query) use ($userId) {
+                $query->where('user_id', $userId);
+            },
+            'group' => function ($query) use ($userId) {
+                $query->whereHas('groupUsers', function ($query) use ($userId) {
+                    $query->where('user_id', $userId)
+                          ->where('status', GroupUserStatus::APPROVED->value);
+                });
+            }
+        ])
+        // Ajouter la condition whereHas pour les groupes ou les posts personnels
+        ->where(function ($query) use ($userId) {
+            $query->whereDoesntHave('group')  // Post sans groupe (personnel)
+                  ->orWhereHas('group', function ($query) use ($userId) {
+                      // Ou bien un post associé à un groupe auquel l'utilisateur est approuvé
+                      $query->whereHas('groupUsers', function ($query) use ($userId) {
+                          $query->where('user_id', $userId)
+                                ->where('status', GroupUserStatus::APPROVED->value);
+                      });
+                  });
+        })
+        ->latest();
     }
 }
