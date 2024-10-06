@@ -15,7 +15,7 @@ defineProps({
                     <h3 class="font-black text-lg">{{ group.name }}</h3>
                     {{ group.status === 'approved' ? (group.role === 'admin' ? group.role : '') : 'not approved'}}
                 </div>
-                <div class="text-xs text-gray-500">{{ group.description }}</div>
+                <div class="ck-content-output text-xs text-gray-500" v-html="group.description?.substring(0, 200)"></div>
             </div>
         </Link>
     </div>

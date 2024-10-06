@@ -1,7 +1,17 @@
 <script setup>
-import InputTextarea from "@/Components/InputTextarea.vue";
 import Checkbox from "@/Components/Checkbox.vue";
 import TextInput from "@/Components/TextInput.vue";
+
+import { Ckeditor } from "@ckeditor/ckeditor5-vue";
+import { ClassicEditor, Bold, Italic, Underline, Link, Heading, List, BlockQuote, Essentials, Mention, Paragraph, Undo } from "ckeditor5";
+import "ckeditor5/ckeditor5.css";
+
+
+const editor = ClassicEditor;
+const editorConfig = {
+    plugins: [Heading, Bold, Italic, Underline, Link, List, BlockQuote, Undo, Essentials, Mention, Paragraph],
+    toolbar: ["heading", "|", "bold", "italic", "underline", "|", "link", "undo", "redo", "|", "bulletedList", "numberedList", "blockQuote"],
+};
 
 defineProps({
     form: Object,
@@ -45,7 +55,7 @@ defineProps({
     <div class="mb-3">
         <label>About Group</label>
 
-        <InputTextarea v-model="form.about" class="w-full"/>
+        <ckeditor :editor="editor" v-model="form.about" :config="editorConfig"></ckeditor>
 
         <div v-if="formErrors.about"
             class="mt-1"

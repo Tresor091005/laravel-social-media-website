@@ -252,4 +252,10 @@ mailpit
     
     TODO : Il doit être possible de voir les postes des groupes à accès public depuis Group/View, de même que sur la page dédiée au poste.
 
-33. 
+33. Afficher la section About de Group/View pour tous les utilisateurs
+
+    - Utilisation de ckeditor pour tous les formlaires de groupe
+    
+    PROBLEME :  Substring au niveau de Home.vue | Group about 
+
+34. 

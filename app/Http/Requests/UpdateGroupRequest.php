@@ -28,7 +28,7 @@ class UpdateGroupRequest extends FormRequest
         return [
             'name' => ['required', 'max:100'],
             'auto_approval' => ['required', 'boolean'],
-            'about' => ['nullable']
+            'about' => ['nullable', 'string']
         ];
     }
 }

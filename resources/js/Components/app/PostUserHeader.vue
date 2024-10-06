@@ -21,7 +21,7 @@ defineProps({
                  class="w-[40px] rounded-full border-2 transition-all hover:border-blue-500"/>
         </Link>
         <div>
-            <h4 class="flex items-center font-bold">
+            <h4 class="flex flex-wrap items-center font-bold">
                 <Link :href="route('profile', post.user.username)" class="hover:underline">
                     {{ post.user.name }}
                 </Link>

@@ -316,7 +316,7 @@ function updateGroup() {
                         <Tab v-slot="{ selected }" as="template">
                             <TabItem text="Photos" :selected="selected"/>
                         </Tab>
-                        <Tab v-if="isCurrentUserAdmin" v-slot="{ selected }" as="template">
+                        <Tab v-slot="{ selected }" as="template">
                             <TabItem text="About" :selected="selected"/>
                         </Tab>
                     </TabList>
@@ -363,11 +363,24 @@ function updateGroup() {
                         <TabPanel class="bg-white p-3 shadow">
                             Photos
                         </TabPanel>
-                        <TabPanel v-if="isCurrentUserAdmin" class="bg-white p-3 shadow">
-                            <GroupForm :form="aboutForm" :form-errors="aboutFormErrors" />
-                            <PrimaryButton @click="updateGroup">
-                                Submit
-                            </PrimaryButton>
+                        <TabPanel class="bg-white p-3 shadow">
+                            <template v-if="isCurrentUserAdmin">
+                                <GroupForm :form="aboutForm" :form-errors="aboutFormErrors" />
+                                <div class="flex flex-1 gap-2 items-center">
+                                    <PrimaryButton @click="updateGroup">
+                                        Submit
+                                    </PrimaryButton>
+                                    <Transition
+                                        enter-active-class="transition ease-in-out"
+                                        enter-from-class="opacity-0"
+                                        leave-active-class="transition ease-in-out"
+                                        leave-to-class="opacity-0"
+                                    >
+                                        <p v-if="aboutForm.recentlySuccessful" class="text-sm text-gray-600 dark:text-gray-400">Saved.</p>
+                                    </Transition>
+                                </div>
+                            </template>
+                            <div v-else class="ck-content-output" v-html="group.about"/>
                         </TabPanel>
                     </TabPanels>
                 </TabGroup>
