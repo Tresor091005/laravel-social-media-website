@@ -5,6 +5,8 @@ import { Head, useForm, usePage } from '@inertiajs/vue3';
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import TabItem from "@/Pages/Profile/Partials/TabItem.vue";
 import Edit from "@/Pages/Profile/Edit.vue";
+import PrimaryButton from "@/Components/PrimaryButton.vue";
+import DangerButton from "@/Components/DangerButton.vue";
 import { XMarkIcon, CheckCircleIcon, CameraIcon } from "@heroicons/vue/24/solid";
 
 const imagesForm = useForm({
@@ -31,6 +33,8 @@ const props = defineProps({
     notification: {
         type: String,
     },
+    isCurrentUserFollower: Boolean,
+    followerCount: Number,
     user: {
         type: Object
     }
@@ -99,6 +103,16 @@ function submitAvatarImage() {
             resetAvatarImage()
             triggerNotification()
         }
+    })
+}
+
+function followUser() {
+    const form = useForm({
+        follow: !props.isCurrentUserFollower
+    })
+
+    form.post(route('user.follow', props.user.id), {
+        preserveScroll: true
     })
 }
 
@@ -177,7 +191,19 @@ function submitAvatarImage() {
                         </template>
                     </div>
                     <div class="flex justify-between items-center flex-1 p-4">
-                        <h2 class="font-bold text-lg">{{ props.user.name }}</h2>
+                        <div>
+                            <h2 class="font-bold text-lg">{{ user.name }}</h2>
+                            <p class="text-xs text-gray-500">{{followerCount}} follower(s)</p>
+                        </div>
+
+                        <div v-if="!isMyProfile">
+                            <PrimaryButton v-if="!isCurrentUserFollower" @click="followUser">
+                                Follow User
+                            </PrimaryButton>
+                            <DangerButton v-else @click="followUser">
+                                Unfollow User
+                            </DangerButton>
+                        </div>
                     </div>
                 </div>
             </div>
