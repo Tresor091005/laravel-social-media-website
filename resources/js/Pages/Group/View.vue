@@ -325,7 +325,10 @@ function updateGroup() {
                         <TabPanel>
                             <template v-if="posts">
                                 <CreatePost :group="group"/>
-                                <PostList :posts="posts" class="flex-1"/>
+                                <PostList v-if="posts.data.length" :posts="posts" class="flex-1"/>
+                                <div v-else class="py-8 text-center">
+                                    There are no posts in this group. Be the first and create it.
+                                </div>
                             </template>
                             <div v-else class="py-8 text-center">
                                 You don't have permission to view these posts.
@@ -380,7 +383,7 @@ function updateGroup() {
                                     </Transition>
                                 </div>
                             </template>
-                            <div v-else class="ck-content-output" v-html="group.about"/>
+                            <div v-else class="ck-content-output" v-html="group.about"></div>
                         </TabPanel>
                     </TabPanels>
                 </TabGroup>

@@ -27,7 +27,7 @@ watch(() => props.posts, () => {
     if (props.posts) {
         allPosts.value = {
             data: props.posts.data,
-            next: props.posts.links.next
+            next: props.posts.links?.next
         }
     }
 }, {deep: true, immediate: true})

@@ -258,4 +258,6 @@ mailpit
     
     PROBLEME :  Substring au niveau de Home.vue | Group about 
 
-34. Follow/Unfollow un utilisateur  
+34. 
+    - Follow/Unfollow un utilisateur  
+    - Afficher les tables posts, followers, followings de Profile/View
