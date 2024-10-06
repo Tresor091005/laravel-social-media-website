@@ -33,6 +33,16 @@ const submit = () => {
     <GuestLayout>
         <Head title="Log in" />
 
+        <div class="text-center dark:text-gray-100">
+            <h2 class="text-2xl text-center">Login</h2>
+            <span class="text-gray-400 text-sm">or</span>
+            <div class="flex justify-center">
+                <Link :href="route('register')" class="inline-block hover:underline">
+                    create new account
+                </Link>
+            </div>
+        </div>
+
         <div v-if="status" class="mb-4 font-medium text-sm text-green-600">
             {{ status }}
         </div>

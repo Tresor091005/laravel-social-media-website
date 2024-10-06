@@ -20,6 +20,7 @@ use App\Notifications\InvitationInGroup;
 use App\Notifications\RequestApproved;
 use App\Notifications\RequestToJoinGroup;
 use App\Notifications\RoleChanged;
+use App\Notifications\UserRemovedFromGroup;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -113,10 +114,11 @@ class GroupController extends Controller
     public function update(UpdateGroupRequest $request, Group $group)
     {
         $data = $request->validated();
+        $removeRejections = $data["auto_approval"] != $group->auto_approval;
         $group->update($data);
         // TODO : notification to group admins
 
-        if(!!$data["auto_approval"]) {
+        if($removeRejections) {
             $groupUsersRejected = GroupUser::query()
                 ->where('group_id', $group->id)
                 ->where('status', GroupUserStatus::REJECTED->value)
@@ -281,6 +283,10 @@ class GroupController extends Controller
             ->where('user_id', $user->id)
             ->get();
 
+        if($ancientDatas->last()?->status === GroupUserStatus::APPROVED->value) {
+            return back();
+        }
+
         foreach($ancientDatas as $ancientData){
             $ancientData->delete();
         }
@@ -339,6 +345,41 @@ class GroupController extends Controller
             $user->notify(new RequestApproved($groupUser->group, $user, $approved));
 
             return back()->with('notification', 'User "'.$user->name.'" was '.($approved ? 'approved' : 'rejected'));
+        }
+
+        return back();
+    }
+
+    public function removeUser(Request $request, Group $group)
+    {
+        if (!$group->isAdmin(Auth::id())) {
+            return response("You don't have permission to perform this action", 403);
+        }
+
+        $data = $request->validate([
+            'user_id' => ['required'],
+        ]);
+
+        $user_id = $data['user_id'];
+        if ($group->isOwner($user_id)) {
+            return response("The owner of the group cannot be removed", 403);
+        }
+
+        $groupUser = GroupUser::where('user_id', $user_id)
+            ->where('group_id', $group->id)
+            ->where('status', GroupUserStatus::APPROVED->value)
+            ->first();
+
+        if ($groupUser) {
+            $user = $groupUser->user;
+            if ($groupUser->group->auto_approval) {
+                $groupUser->status = GroupUserStatus::REJECTED->value;
+                $groupUser->save();
+            } else {
+                $groupUser->delete();
+            }
+
+            $user->notify(new UserRemovedFromGroup($group));
         }
 
         return back();

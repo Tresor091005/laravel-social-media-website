@@ -232,3 +232,12 @@ mailpit
 
     - Modification de EditDeleteDropdown en fonction des actions possibles pour l'utilisatuer
     - Changement des autorisations de suppression pour supprimer un commentaire ou un post et envoie de notification si cette action n'est pas réalisé par le créateur de l'élément
+
+30. Supprimer les utilisateurs du groupe
+    - si le groupe a activé l'auto approbation, l'utilisateur est rejeté, ce qui l'empêche de réaliser toute nouvelle demande
+
+    - sinon il est juste supprimé et peux demander à rejoindre à nouveau
+
+    L'objectif était principalement d'empêcher un utilisateur supprimé de rejoindre immediatement le groupe de son plein gré
+
+    TODO : Laisser n'importe quel utilisateur authentifié de voir la liste des admins d'un groupe
