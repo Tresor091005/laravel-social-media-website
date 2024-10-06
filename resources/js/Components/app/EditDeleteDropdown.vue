@@ -3,18 +3,28 @@
 import {EllipsisVerticalIcon, PencilIcon, TrashIcon} from "@heroicons/vue/20/solid/index.js";
 import {Menu, MenuButton, MenuItem, MenuItems} from "@headlessui/vue";
 import {usePage} from "@inertiajs/vue3";
+import { computed } from "vue";
 
-defineProps({
-    user: Object
+const props = defineProps({
+    user: Object,
+    post: {
+        type: Object,
+        default: null
+    }
 })
+
 const authUser = usePage().props.auth.user;
+
+const postOwner = computed(()=> props.post.user.id === authUser.id)
+const elementOwner = computed(()=> props.user.id === authUser.id)
+const isAdmin = computed(()=> props.post?.group?.role === 'admin' && props.post?.group?.status === 'approved')
 
 defineEmits(['edit', 'delete'])
 
 </script>
 
 <template>
-    <Menu as="div" v-if="user.id === authUser.id" class="relative inline-block text-left">
+    <Menu as="div" v-if="elementOwner ||postOwner || isAdmin" class="relative inline-block text-left">
         <div>
             <MenuButton
                 class="w-8 h-8 z-10 rounded-full hover:bg-black/5 transition flex items-center justify-center"
@@ -39,7 +49,7 @@ defineEmits(['edit', 'delete'])
                 class="absolute z-20 right-0 mt-2 w-32 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none"
             >
                 <div class="px-1 py-1">
-                    <MenuItem v-slot="{ active }">
+                    <MenuItem v-slot="{ active }" v-if="elementOwner">
                         <button
                             @click="$emit('edit')"
                             :class="[

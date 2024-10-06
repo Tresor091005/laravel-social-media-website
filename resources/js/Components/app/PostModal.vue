@@ -94,6 +94,8 @@ watch(() => props.post, () => {
 function submit() {
     if (props.group) {
         form.group_id = props.group.id
+    } else if (props.post.group) {
+        form.group_id = props.post.group.id
     }
     form.attachments = attachmentFiles.value.map(myFile => myFile.file)
     if (props.post.id) {

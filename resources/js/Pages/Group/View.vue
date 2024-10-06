@@ -294,8 +294,8 @@ function updateGroup() {
                         <Tab v-slot="{ selected }" as="template">
                             <TabItem text="Posts" :selected="selected"/>
                         </Tab>
-                        <Tab v-if="isJoinedToGroup" :number="{number: users.length}" v-slot="{ selected }" as="template">
-                            <TabItem text="Users" :selected="selected"/>
+                        <Tab v-if="isJoinedToGroup" v-slot="{ selected }" as="template">
+                            <TabItem text="Users" :number="{number: users.length}" :selected="selected"/>
                         </Tab>
                         <Tab v-if="isCurrentUserAdmin" v-slot="{ selected }" as="template">
                             <TabItem text="Pending Requests" :number="{number: requests.length}" :selected="selected"/>

@@ -221,4 +221,14 @@ mailpit
 
     - créer une section dans Group/View.vue pour mettre à jour les informations (name, auto approval et about) du groupe
 
-28. 
+28. Chargement des posts dans Group/View et création de post dans un group 
+
+    - Réutilisation de la requête de HomeController pour charger les posts dans un groupe spécifique
+    - Réutilisation de PostList
+    - Maintenir les précédentes fonctionnalités
+    - Ajout de groupe_id lors de la création d'un post via un groupe
+
+29. Autorisation de suppression d'un post ou d'un commentaire
+
+    - Modification de EditDeleteDropdown en fonction des actions possibles pour l'utilisatuer
+    - Changement des autorisations de suppression pour supprimer un commentaire ou un post et envoie de notification si cette action n'est pas réalisé par le créateur de l'élément
