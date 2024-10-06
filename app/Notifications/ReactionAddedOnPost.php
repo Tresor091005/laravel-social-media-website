@@ -38,7 +38,7 @@ class ReactionAddedOnPost extends Notification
     {
         return (new MailMessage)
                     ->line('User "'.$this->user->name.'" liked your post.')
-                    ->action('View Post', url('/')) // user profile page link or/and post ?
+                    ->action('View Post', url(route('post.view', $this->post->id))) // user profile page link or/and post ?
                     ->line('Thank you for using our application!');
     }
 

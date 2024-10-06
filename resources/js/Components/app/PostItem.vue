@@ -48,7 +48,7 @@ function sendReaction() {
         <!-- Post header -->
         <div class="flex items-center justify-between mb-3">
             <PostUserHeader :post="post"/>
-            <EditDeleteDropdown :user="post.user" :post="post" @edit="openEditModal" @delete="deletePost" />
+            <EditDeleteDropdown :user="post.user" :post="post" :open-allowed="true" @edit="openEditModal" @delete="deletePost" />
         </div>
 
         <!-- Post body -->
@@ -89,7 +89,7 @@ function sendReaction() {
             </div>
 
             <!-- Comments section -->
-            <DisclosurePanel class="comment-list mt-3 max-h-[400px] overflow-auto">
+            <DisclosurePanel class="comment-list mt-3 px-1 pb-3 max-h-[400px] overflow-auto">
                 <CommentList :post="post" :data="{comments: post.comments}" />
             </DisclosurePanel>
         </Disclosure>

@@ -245,7 +245,11 @@ mailpit
 31. Notification après certaines actions
 
     - création de post dans un groupe et réaction; création d'un commentaire et réaction
-    
-    - TODO : à la fin des tâches prévues, revoir chacun des mails envoyés et les améliorer puis gérer l'affichage de notifications directement dans le système
 
-32. 
+    TODO : à la fin des tâches prévues, revoir chacun des mails envoyés et les améliorer puis gérer l'affichage de notifications directement dans le système
+
+32. Création d'une page dédiée aux postes et mise à jour du texte des notifications
+    
+    TODO : Il doit être possible de voir les postes des groupes à accès public depuis Group/View, de même que sur la page dédiée au poste.
+
+33. 

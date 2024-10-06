@@ -7,6 +7,7 @@ use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdateCommentRequest;
 use App\Http\Requests\UpdatePostRequest;
 use App\Http\Resources\CommentResource;
+use App\Http\Resources\PostResource;
 use App\Models\Post;
 use App\Models\Comment;
 use App\Models\PostAttachment;
@@ -24,9 +25,30 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
+use Inertia\Inertia;
 
 class PostController extends Controller
 {
+
+    public function view(Post $post)
+    {
+        $group = $post->group;
+        if($group && !$group->hasApprovedUser(Auth::id())){
+            return to_route('group.profile', $group->slug)->with('notification', 'You need to join this group if you want to see the post');
+        }
+
+        $post->loadCount('reactions');
+        $post->load([
+            'comments' => function ($query) {
+                $query->withCount('reactions'); // SELECT * FROM comments WHERE post_id IN (1, 2, 3...)
+                // SELECT COUNT(*) from reactions
+            },
+        ]);
+        return Inertia::render('Post/View', [
+            'post'=> new PostResource($post),
+        ]);
+    }
+
     /**
      * Store a newly created resource in storage.
      */
@@ -209,7 +231,7 @@ class PostController extends Controller
         ]);
 
         $post = $comment->post;
-        $post->user->notify(new CommentCreated($comment));
+        $post->user->notify(new CommentCreated($comment, $post));
 
         return response(new CommentResource($comment), 201);
     }
