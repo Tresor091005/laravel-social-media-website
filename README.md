@@ -241,3 +241,11 @@ mailpit
     L'objectif était principalement d'empêcher un utilisateur supprimé de rejoindre immediatement le groupe de son plein gré
 
     TODO : Laisser n'importe quel utilisateur authentifié de voir la liste des admins d'un groupe
+
+31. Notification après certaines actions
+
+    - création de post dans un groupe et réaction; création d'un commentaire et réaction
+    
+    - TODO : à la fin des tâches prévues, revoir chacun des mails envoyés et les améliorer puis gérer l'affichage de notifications directement dans le système
+
+32. 

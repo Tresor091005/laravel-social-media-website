@@ -118,13 +118,13 @@ class GroupController extends Controller
         $group->update($data);
         // TODO : notification to group admins
 
-        if($removeRejections) {
+        if ($removeRejections) {
             $groupUsersRejected = GroupUser::query()
                 ->where('group_id', $group->id)
                 ->where('status', GroupUserStatus::REJECTED->value)
                 ->get();
 
-            foreach($groupUsersRejected as $groupUser) {
+            foreach ($groupUsersRejected as $groupUser) {
                 $groupUser->delete();
             }
         }
@@ -160,7 +160,7 @@ class GroupController extends Controller
             if ($group->cover_path) {
                 Storage::disk('public')->delete($group->cover_path);
             }
-            $path = $cover->store('group-'.$group->id, 'public');
+            $path = $cover->store('group-' . $group->id, 'public');
             $group->update(['cover_path' => $path]);
             $success = 'Your cover image was updated';
         }
@@ -169,7 +169,7 @@ class GroupController extends Controller
             if ($group->thumbnail_path) {
                 Storage::disk('public')->delete($group->thumbnail_path);
             }
-            $path = $thumbnail->store('group-'.$group->id, 'public');
+            $path = $thumbnail->store('group-' . $group->id, 'public');
             $group->update(['thumbnail_path' => $path]);
             $success = 'Your thumbnail image was updated';
         }
@@ -223,7 +223,7 @@ class GroupController extends Controller
 
         if ($errorTitle) {
             // TODO : Proper rendering
-            return \inertia('Error', ['title'=> $errorTitle]);
+            return \inertia('Error', ['title' => $errorTitle]);
         }
 
         $groupUser->status = GroupUserStatus::APPROVED->value;
@@ -234,7 +234,7 @@ class GroupController extends Controller
 
         $adminUser->notify(new InvitationApproved($groupUser->group, $groupUser->user));
 
-        return redirect(route('group.profile', $groupUser->group))->with('notification', 'You accepted to join to group "'.$groupUser->group->name.'"');
+        return redirect(route('group.profile', $groupUser->group))->with('notification', 'You accepted to join to group "' . $groupUser->group->name . '"');
     }
 
     public function acceptInvitation(Group $group)
@@ -256,7 +256,7 @@ class GroupController extends Controller
 
         if ($errorTitle) {
             // TODO : Proper rendering
-            return \inertia('Error', ['title'=> $errorTitle]);
+            return \inertia('Error', ['title' => $errorTitle]);
         }
 
         $groupUser->status = GroupUserStatus::APPROVED->value;
@@ -267,7 +267,7 @@ class GroupController extends Controller
 
         $adminUser->notify(new InvitationApproved($groupUser->group, $groupUser->user));
 
-        return redirect(route('group.profile', $groupUser->group))->with('notification', 'You accepted to join to group "'.$groupUser->group->name.'"');
+        return redirect(route('group.profile', $groupUser->group))->with('notification', 'You accepted to join to group "' . $groupUser->group->name . '"');
     }
 
     public function join(Request $request, Group $group)
@@ -283,11 +283,11 @@ class GroupController extends Controller
             ->where('user_id', $user->id)
             ->get();
 
-        if($ancientDatas->last()?->status === GroupUserStatus::APPROVED->value) {
+        if ($ancientDatas->last()?->status === GroupUserStatus::APPROVED->value) {
             return back();
         }
 
-        foreach($ancientDatas as $ancientData){
+        foreach ($ancientDatas as $ancientData) {
             $ancientData->delete();
         }
 
@@ -299,7 +299,7 @@ class GroupController extends Controller
             $successMessage = 'Your request has been accepted. You will be notified once you will be approved';
 
 
-            if(!count($ancientDatas)){
+            if (!count($ancientDatas)) {
                 Notification::send($group->adminUsers, new RequestToJoinGroup($group, $user));
             }
         }
@@ -344,7 +344,7 @@ class GroupController extends Controller
             $user = $groupUser->user;
             $user->notify(new RequestApproved($groupUser->group, $user, $approved));
 
-            return back()->with('notification', 'User "'.$user->name.'" was '.($approved ? 'approved' : 'rejected'));
+            return back()->with('notification', 'User "' . $user->name . '" was ' . ($approved ? 'approved' : 'rejected'));
         }
 
         return back();
