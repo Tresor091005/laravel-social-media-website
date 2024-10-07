@@ -261,3 +261,7 @@ mailpit
 34. 
     - Follow/Unfollow un utilisateur  
     - Afficher les tables posts, followers, followings de Profile/View
+
+35. Afficher les postes pertinents sur chaque page et la liste des followings sur la page d'acceuil
+
+36. 

@@ -42,7 +42,7 @@ class GroupController extends Controller
         if ($group->hasApprovedUser($userId)) {
             $posts = Post::postsForTimeline($userId)
                 ->where('group_id', $group->id)
-                ->paginate(6);
+                ->paginate(5);
             $posts = PostResource::collection($posts);
         } else {
             return Inertia::render('Group/View', [

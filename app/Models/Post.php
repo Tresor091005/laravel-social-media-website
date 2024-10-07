@@ -47,52 +47,34 @@ class Post extends Model
         return $this->hasMany(Comment::class)->latest();
     }
 
+    // tous les posts avec le nombre de réactions,
+    // les commentaires avec leur nombre de reactions,
+    // savoir si l'utilisateur actuel a de reaction
+    // groupes où je suis approuvés,
+    // les posts qui ont un groupe_id null
     public static function postsForTimeline($userId): Builder
     {
         return Post::query()
         ->withCount('reactions')
         ->with([
-            'comments' => function ($query) {
-                $query->withCount('reactions');
-            },
+            'comments.reactions',
             'reactions' => function ($query) use ($userId) {
                 $query->where('user_id', $userId);
             },
-            'group' => function ($query) use ($userId) {
-                $query->whereHas('groupUsers', function ($query) use ($userId) {
+            'group.groupUsers' => function ($query) use ($userId) {
                     $query->where('user_id', $userId)
                           ->where('status', GroupUserStatus::APPROVED->value);
-                });
             }
         ])
-        // Ajouter la condition whereHas pour les groupes ou les posts personnels
         ->where(function ($query) use ($userId) {
-            $query->whereDoesntHave('group')  // Post sans groupe (personnel)
-                  ->orWhereHas('group', function ($query) use ($userId) {
-                      // Ou bien un post associé à un groupe auquel l'utilisateur est approuvé
-                      $query->whereHas('groupUsers', function ($query) use ($userId) {
-                          $query->where('user_id', $userId)
-                                ->where('status', GroupUserStatus::APPROVED->value);
-                      });
-                  });
+            $query->whereNull('group_id')
+                  ->orWhereHas('group.groupUsers', function ($query) use ($userId) {
+                        $query->where('user_id', $userId)
+                            ->where('status', GroupUserStatus::APPROVED->value);
+                    });
         })
         ->latest();
     }
-
-    // public static function postsForTimeline($userId): Builder
-    // {
-    //     return Post::query() // SELECT * FROM posts
-    //     ->withCount('reactions') // SELECT COUNT(*) from reactions
-    //     ->with([
-    //         'comments' => function ($query) {
-    //             $query->withCount('reactions'); // SELECT * FROM comments WHERE post_id IN (1, 2, 3...)
-    //             // SELECT COUNT(*) from reactions
-    //         },
-    //         'reactions' => function ($query) use ($userId) {
-    //             $query->where('user_id', $userId); // SELECT * from reactions WHERE user_id = ?
-    //         }])
-    //         ->latest();
-    // }
 
     public function isOwner($userId)
     {
