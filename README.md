@@ -264,4 +264,6 @@ mailpit
 
 35. Afficher les postes pertinents sur chaque page et la liste des followings sur la page d'acceuil
 
-36. 
+36. TAB Photos
+
+    TODO : Permettre de jump à la publication contenant l'image et de télécharger les images en fullscreen
