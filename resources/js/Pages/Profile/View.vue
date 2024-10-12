@@ -204,8 +204,8 @@ function followUser() {
                                 </div>
                             </template>
                         </div>
-                        <div class="flex justify-between items-center flex-1 p-4">
-                            <div>
+                        <div class="flex flex-wrap justify-between items-center flex-1 p-4">
+                            <div class="mb-2">
                                 <h2 class="font-bold text-lg">{{ user.name }}</h2>
                                 <p class="text-xs text-gray-500">{{followerCount}} follower(s)</p>
                             </div>

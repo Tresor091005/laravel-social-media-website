@@ -8,7 +8,7 @@ import {
     DialogPanel,
     DialogTitle,
 } from '@headlessui/vue'
-import { isImage } from "@/helpers.js";
+import { isImage, isVideo, isAudio, isPdf } from "@/helpers.js";
 
 
 const props = defineProps({
@@ -69,22 +69,36 @@ function next() {
                             <DialogPanel
                                 class="flex flex-col w-full transform overflow-hidden bg-slate-800  text-left align-middle shadow-xl transition-all">
                                 <button @click="closeModal"
-                                    class="absolute right-3 top-3 z-30 w-10 h-10 rounded-full hover:bg-black/10 transition flex items-center justify-center text-gray-100">
+                                    class="absolute right-3 top-3 w-10 h-10 rounded-full hover:bg-black/10 transition flex items-center justify-center text-gray-100 z-40">
                                     <XMarkIcon class="w-6 h-6 " />
                                 </button>
                                 <div class="relative group h-full ">
                                     <div @click="prev"
-                                        class="absolute opacity-0 group-hover:opacity-100 text-gray-100 cursor-pointer flex items-center w-12 h-full left-0 bg-black/5">
+                                        class="absolute opacity-0 group-hover:opacity-100 text-gray-100 cursor-pointer flex items-center w-8 sm:w-12 h-full left-0 bg-black/5 z-30">
                                         <ChevronLeftIcon class="w-12" />
                                     </div>
                                     <div @click="next"
-                                        class="absolute opacity-0 group-hover:opacity-100 text-gray-100 cursor-pointer flex items-center w-12 h-full right-0 bg-black/5">
+                                        class="absolute opacity-0 group-hover:opacity-100 text-gray-100 cursor-pointer flex items-center w-8 sm:w-12 h-full right-0 bg-black/5 z-30">
                                         <ChevronRightIcon class="w-12" />
                                     </div>
 
                                     <div class="flex items-center justify-center w-full h-full p-3">
                                         <img v-if="isImage(attachment)" :src="attachment.url"
                                             class="max-w-full max-h-full" />
+                                        <div v-else-if="isVideo(attachment)" class="flex items-center">
+                                            <video :src="attachment.url" controls autoplay @ended="next"></video>
+                                        </div>
+                                        <div v-else-if="isAudio(attachment)" class="flex flex-col text-white justify-center items-center">
+                                            <div class="mb-3">
+                                                {{ attachment.name }}
+                                            </div>
+                                            <audio autoplay controls @ended="next">
+                                                <source :src="attachment.url" :type="attachment.mime">
+                                            </audio>
+                                        </div>
+
+                                        <embed v-else-if="isPdf(attachment)" :src="attachment.url" type="application/pdf" class="px-8" width="100%" height="100%">
+
                                         <div v-else
                                             class="p-32 flex flex-col justify-center items-center text-gray-100">
                                             <PaperClipIcon class="w-10 h-10 mb-3" />

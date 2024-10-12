@@ -276,4 +276,6 @@ mailpit
 
 39. Implémenter la recherche par hashtag
 
-40. 
+40. Visualisation audio, pdf et vidéo dans l'app
+
+41. 

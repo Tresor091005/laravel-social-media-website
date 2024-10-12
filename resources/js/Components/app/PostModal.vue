@@ -1,10 +1,11 @@
 <script setup>
 import { computed, watch, ref } from "vue";
 import { XMarkIcon, PaperClipIcon, BookmarkIcon, ArrowUturnLeftIcon } from "@heroicons/vue/24/solid";
+import { MusicalNoteIcon, DocumentIcon } from '@heroicons/vue/24/outline';
 import { TransitionRoot, TransitionChild, Dialog, DialogPanel, DialogTitle, } from "@headlessui/vue";
 import PostUserHeader from "@/Components/app/PostUserHeader.vue";
 import { useForm, usePage } from "@inertiajs/vue3";
-import { isImage } from "@/helpers.js";
+import { isAudio, isImage, isPdf, isVideo } from "@/helpers.js";
 
 import { Ckeditor } from "@ckeditor/ckeditor5-vue";
 import { ClassicEditor, Bold, Italic, Underline, Link, Heading, List, BlockQuote, Essentials, Mention, Paragraph, Undo } from "ckeditor5";
@@ -286,6 +287,36 @@ function getAIContent() {
                                                 <img v-if="isImage(myFile.file || myFile)" :src="myFile.url"
                                                     class="object-contain aspect-square"
                                                     :class="myFile.deleted ? 'opacity-50' : ''" />
+                                                <div v-else-if="isVideo(myFile.file || myFile)" class="flex flex-col justify-center items-center px-3"
+                                                    :class="myFile.deleted ? 'opacity-50' : ''">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                                        stroke="currentColor"
+                                                        class="w-16 h-16">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                            d="M15.91 11.672a.375.375 0 010 .656l-5.603 3.113a.375.375 0 01-.557-.328V8.887c0-.286.307-.466.557-.327l5.603 3.112z"/>
+                                                    </svg>
+
+                                                    <small class="text-center">
+                                                        {{ (myFile.file || myFile).name }}
+                                                    </small>
+                                                </div>
+                                                <div v-else-if="isAudio(myFile.file || myFile)" class="flex flex-col justify-center items-center px-3"
+                                                    :class="myFile.deleted ? 'opacity-50' : ''">
+                                                    <MusicalNoteIcon class="w-10 h-10 mb-3" />
+
+                                                    <small class="text-center">
+                                                        {{ (myFile.file || myFile).name }}
+                                                    </small>
+                                                </div>
+                                                <div v-else-if="isPdf(myFile.file || myFile)" class="flex flex-col justify-center items-center px-3"
+                                                    :class="myFile.deleted ? 'opacity-50' : ''">
+                                                    <DocumentIcon class="w-10 h-10 mb-3" />
+
+                                                    <small class="text-center">
+                                                        {{ (myFile.file || myFile).name }}
+                                                    </small>
+                                                </div>
                                                 <div v-else class="flex flex-col justify-center items-center px-3"
                                                     :class="myFile.deleted ? 'opacity-50' : ''">
                                                     <PaperClipIcon class="w-10 h-10 mb-3" />
