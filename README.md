@@ -270,4 +270,8 @@ mailpit
 
 37. REPORTED
 
-38. 
+38. Implémenter la recherche
+
+    PROBLEME : Pour le moment la recherche pour les posts ne prend en compte que les groupes approuvés et les posts sans groupes. Il doit aussi inclure les posts de tous groupes publics 
+
+39. 

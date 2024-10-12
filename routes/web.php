@@ -4,6 +4,7 @@ use App\Http\Controllers\GroupController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SearchController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -24,6 +25,8 @@ Route::get('/group/approve-invitation/{token}', [GroupController::class, 'approv
 Route::post('/group/approve-invitation/{group:slug}', [GroupController::class, 'acceptInvitation'])->name('group.acceptInvitation');
 
 Route::middleware('auth')->group(function () {
+    Route::get('/search/{search?}', [SearchController::class, 'search'])->name('search');
+
     // POSTS
     Route::post('/post', [PostController::class, 'store'])->name('post.create');
     Route::get('/post/{post}', [PostController::class, 'view'])->name('post.view');
