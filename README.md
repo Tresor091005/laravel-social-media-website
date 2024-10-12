@@ -274,4 +274,6 @@ mailpit
 
     PROBLEME : Pour le moment la recherche pour les posts ne prend en compte que les groupes approuvés et les posts sans groupes. Il doit aussi inclure les posts de tous groupes publics 
 
-39. 
+39. Implémenter la recherche par hashtag
+
+40. 

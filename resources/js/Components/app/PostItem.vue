@@ -8,12 +8,21 @@ import ReadMoreReadLess from "@/Components/app/ReadMoreReadLess.vue";
 import EditDeleteDropdown from '@/Components/app/EditDeleteDropdown.vue';
 import PostAttachments from "@/Components/app/PostAttachments.vue";
 import CommentList from "@/Components/app/CommentList.vue";
+import {computed} from "vue";
 
 const props = defineProps({
     post: Object,
 })
 
 const emit = defineEmits(['editClick', 'attachmentClick'])
+
+const postBody = computed(() => props.post.body.replace(
+    /(#\w+)(?![^<]*<\/a>)/g,
+    (match, group) => {
+        const encodedGroup = encodeURIComponent(group);
+        return `<a href="/search/${encodedGroup}" class="hashtag">${group}</a>`;
+    })
+)
 
 function openEditModal() {
     emit('editClick', props.post)
@@ -53,7 +62,7 @@ function sendReaction() {
 
         <!-- Post body -->
         <div class="mb-3">
-            <ReadMoreReadLess :content="post.body" />
+            <ReadMoreReadLess :content="postBody" />
         </div>
 
         <!-- Post Attachments -->
