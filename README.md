@@ -278,4 +278,6 @@ mailpit
 
 40. Visualisation audio, pdf et vidéo dans l'app
 
-41. 
+41. REPORTED
+
+42. 
