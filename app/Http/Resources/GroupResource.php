@@ -24,6 +24,7 @@ class GroupResource extends JsonResource
             'slug' => $this->slug,
             'status' => $this->currentUserGroup?->status,
             'role' => $this->currentUserGroup?->role,
+            'pinned_post_id' => $this->pinned_post_id,
             'thumbnail_url' => $thumbnailUrl,
             'cover_url' => $coverUrl,
             'auto_approval' => $this->auto_approval,

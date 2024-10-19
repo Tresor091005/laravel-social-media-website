@@ -280,4 +280,13 @@ mailpit
 
 41. REPORTED
 
-42. 
+42. Epingler les posts
+
+    - modif des models Group et User pour ajouter une clé étrangère vers un unique post epinglé
+    - frontend : editdeletedropdown et postItem pour envoyer la demande
+    - nouvelle méthode de postcontroller pour épingler le dit post
+    - modif des requêtes de selection des posts
+
+    TODO : épingler un commentaire sur un post
+
+43. 

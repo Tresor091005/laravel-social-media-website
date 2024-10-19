@@ -234,7 +234,10 @@ class PostController extends Controller
         ]);
 
         $post = $comment->post;
-        $post->user->notify(new CommentCreated($comment, $post));
+        if (Auth::id() != $post->user->id) {
+            $post = $comment->post;
+            $post->user->notify(new CommentCreated($comment, $post));
+        }
 
         return response(new CommentResource($comment), 201);
     }
@@ -307,5 +310,43 @@ class PostController extends Controller
             'num_of_reactions' => $reactions,
             'current_user_has_reaction' => $hasReaction
         ]);
+    }
+
+    public function pinUnpin(Request $request, Post $post)
+    {
+        $forGroup = $request->get('forGroup', false);
+        $group = $post->group;
+
+        if ($forGroup && !$group) {
+            return response("Invalid Request", 400);
+        }
+
+        if ($forGroup && !$group->isAdmin(Auth::id())) {
+            return response("You don't have permission to perform this action", 403);
+        }
+
+        $pinned = false;
+        if ($forGroup && $group->isAdmin(Auth::id())) {
+            if ($group->pinned_post_id === $post->id) {
+                $group->pinned_post_id = null;
+            } else {
+                $pinned = true;
+                $group->pinned_post_id = $post->id;
+            }
+            $group->save();
+        }
+
+        if (!$forGroup) {
+            $user = $request->user();
+            if ($user->pinned_post_id === $post->id) {
+                $user->pinned_post_id = null;
+            } else {
+                $pinned = true;
+                $user->pinned_post_id = $post->id;
+            }
+            $user->save();
+        }
+
+        return back()->with('notification', 'Post was successfully ' . ( $pinned ? 'pinned' : 'unpinned' ));
     }
 }

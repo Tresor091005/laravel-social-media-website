@@ -35,6 +35,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/post/download/{attachment}', [PostController::class, 'downloadAttachment'])->name('post.download');
     Route::post('/post/{post}/reaction', [PostController::class, 'postReaction'])->name('post.reaction');
     Route::post('/post/{post}/comment', [PostController::class, 'createComment'])->name('post.comment.create');
+    Route::post('/post/{post}/pin', [PostController::class, 'pinUnpin'])->name('post.pinUnpin');
 
     // COMMENTS
     Route::delete('/comment/{comment}', [PostController::class, 'deleteComment'])->name('comment.delete');

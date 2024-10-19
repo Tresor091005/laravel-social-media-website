@@ -52,9 +52,9 @@ class Post extends Model
     // savoir si l'utilisateur actuel a de reaction
     // groupes où je suis approuvés,
     // les posts qui ont un groupe_id null
-    public static function postsForTimeline($userId): Builder
+    public static function postsForTimeline($userId, $getLatest = true): Builder
     {
-        return Post::query()
+        $query = Post::query()
         ->withCount('reactions')
         ->with([
             'comments.reactions',
@@ -72,8 +72,12 @@ class Post extends Model
                         $query->where('user_id', $userId)
                             ->where('status', GroupUserStatus::APPROVED->value);
                     });
-        })
-        ->latest();
+        });
+        if ($getLatest) {
+            $query->latest();
+        }
+
+        return $query;
     }
 
     public function isOwner($userId)

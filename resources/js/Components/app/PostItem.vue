@@ -2,17 +2,21 @@
 import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/vue'
 import { ChatBubbleLeftRightIcon, HandThumbUpIcon } from '@heroicons/vue/24/outline'
 import PostUserHeader from "@/Components/app/PostUserHeader.vue";
-import { router } from "@inertiajs/vue3";
+import { router, usePage, useForm } from "@inertiajs/vue3";
 import axiosClient from '@/axiosClient';
 import ReadMoreReadLess from "@/Components/app/ReadMoreReadLess.vue";
 import EditDeleteDropdown from '@/Components/app/EditDeleteDropdown.vue';
 import PostAttachments from "@/Components/app/PostAttachments.vue";
 import CommentList from "@/Components/app/CommentList.vue";
 import {computed} from "vue";
+import {MapPinIcon} from "@heroicons/vue/24/outline/index.js";
 
 const props = defineProps({
     post: Object,
 })
+
+const authUser = usePage().props.auth.user;
+const group = props.post.group;
 
 const emit = defineEmits(['editClick', 'attachmentClick'])
 
@@ -24,6 +28,18 @@ const postBody = computed(() => props.post.body.replace(
     })
 )
 
+const isPinned = computed(() => {
+    if (['Home', 'Search'].includes(usePage().component)) {
+        return false;
+    }
+
+    if (group?.id) {
+        return group?.pinned_post_id === props.post.id
+    }
+
+    return authUser?.pinned_post_id === props.post.id
+})
+
 function openEditModal() {
     emit('editClick', props.post)
 }
@@ -34,6 +50,29 @@ function deletePost() {
             preserveScroll: true,
         })
     }
+}
+
+function pinUnpinPost() {
+    const form = useForm({
+        forGroup: group?.id
+    })
+    let isPinned = false;
+    if (group?.id) {
+        isPinned = group?.pinned_post_id === props.post.id;
+    } else {
+        isPinned = authUser?.pinned_post_id === props.post.id;
+    }
+
+    form.post(route('post.pinUnpin', props.post.id), {
+        preserveScroll: true,
+        onSuccess: () => {
+            if (group?.id) {
+                group.pinned_post_id = isPinned ? null : props.post.id
+            } else {
+                authUser.pinned_post_id = isPinned ? null : props.post.id
+            }
+        }
+    })
 }
 
 function openAttachment(ind) {
@@ -57,7 +96,19 @@ function sendReaction() {
         <!-- Post header -->
         <div class="flex items-center justify-between mb-3">
             <PostUserHeader :post="post"/>
-            <EditDeleteDropdown :user="post.user" :post="post" :open-allowed="true" @edit="openEditModal" @delete="deletePost" />
+            <div class="flex items-center gap-2">
+                <div v-if="isPinned" class="flex items-center text-xs">
+                    <MapPinIcon
+                                class="h-3 w-3"
+                                aria-hidden="true" />
+                    pinned
+                </div>
+                <EditDeleteDropdown :user="post.user" :post="post" :open-allowed="true"
+                                    @edit="openEditModal"
+                                    @delete="deletePost"
+                                    @pin="pinUnpinPost"
+                />
+            </div>
         </div>
 
         <!-- Post body -->

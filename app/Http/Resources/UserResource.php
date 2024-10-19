@@ -25,6 +25,7 @@ class UserResource extends JsonResource
             "created_at" => $this->created_at,
             "updated_at" => $this->updated_at,
             "username" => $this->username,
+            'pinned_post_id' => $this->pinned_post_id,
             "cover_url" => $coverUrl,
             "avatar_url" => $avatarUrl,
         ];
