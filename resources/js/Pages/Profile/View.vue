@@ -150,7 +150,7 @@ function followUser() {
                     {{ errors.avatar }}
                 </div>
 
-                <div class="relative bg-white group">
+                <div class="relative bg-white group dark:bg-slate-950 dark:text-gray-100">
                     <img :src="coverImageSrc || props.user.cover_url || '/img/default_cover.jpg'"
                         class="w-full h-[200px] object-cover" alt="cover-image">
                     <div v-if="isMyProfile" class="absolute top-2 right-2">
@@ -222,9 +222,9 @@ function followUser() {
                     </div>
                 </div>
             </div>
-            <div class="border-t p-4 pt-0">
+            <div class="border-t m-4 mt-0">
                 <TabGroup>
-                    <TabList class="flex bg-white">
+                    <TabList class="flex bg-white dark:bg-slate-950 dark:text-white">
                         <Tab v-slot="{ selected }" as="template">
                             <TabItem text="Posts" :selected="selected" />
                         </Tab>
@@ -263,7 +263,7 @@ function followUser() {
                                               :key="user.id"
                                               class="shadow rounded-lg"/>
                             </div>
-                            <div v-else class="text-center py-8">
+                            <div v-else class="text-center dark:text-gray-100 py-8">
                                 User does not have followers.
                             </div>
                         </TabPanel>
@@ -278,7 +278,7 @@ function followUser() {
                                               :key="user.id"
                                               class="shadow rounded-lg"/>
                             </div>
-                            <div v-else class="text-center py-8">
+                            <div v-else class="text-center dark:text-gray-100 py-8">
                                 The user is not following to anybody
                             </div>
                         </TabPanel>

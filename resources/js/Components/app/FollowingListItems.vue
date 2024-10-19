@@ -21,6 +21,7 @@ defineProps({
             <UserListItem v-for="user of users"
                           :user="user"
                           :key="user.id"
+                          :dark-shadow="false"
                           class="rounded-lg"/>
         </div>
     </div>

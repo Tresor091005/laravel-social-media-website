@@ -209,7 +209,7 @@ function updateGroup() {
                     class="my-2 py-2 px-3 font-medium text-sm bg-red-400 text-white">
                     {{ errors.thumbnail }}
                 </div>
-                <div class="group relative bg-white">
+                <div class="group relative bg-white dark:bg-slate-950 dark:text-gray-100">
                     <img :src="coverImageSrc || group.cover_url || '/img/default_cover.jpg'"
                         class="w-full h-[200px] object-cover">
                     <div v-if="isCurrentUserAdmin" class="absolute top-2 right-2 ">
@@ -303,9 +303,9 @@ function updateGroup() {
                     </div>
                 </div>
             </div>
-            <div class="border-t p-4 pt-0">
+            <div class="border-t m-4 mt-0">
                 <TabGroup>
-                    <TabList class="flex bg-white">
+                    <TabList class="flex bg-white dark:bg-slate-950 dark:text-white">
                         <Tab v-slot="{ selected }" as="template">
                             <TabItem text="Posts" :selected="selected"/>
                         </Tab>
@@ -328,11 +328,11 @@ function updateGroup() {
                             <template v-if="posts">
                                 <CreatePost :group="group"/>
                                 <PostList v-if="posts.data.length" :posts="posts" class="flex-1"/>
-                                <div v-else class="py-8 text-center">
+                                <div v-else class="py-8 text-center dark:text-gray-100p">
                                     There are no posts in this group. Be the first and create it.
                                 </div>
                             </template>
-                            <div v-else class="py-8 text-center">
+                            <div v-else class="py-8 text-center dark:text-gray-100">
                                 You don't have permission to view these posts.
                             </div>
                         </TabPanel>
@@ -361,14 +361,14 @@ function updateGroup() {
                                               @approve="approveUser"
                                               @reject="rejectUser"/>
                             </div>
-                            <div v-else class="py-8 text-center">
+                            <div v-else class="py-8 text-center dark:text-gray-100">
                                 There are no pending requests.
                             </div>
                         </TabPanel>
-                        <TabPanel class="bg-white p-3 shadow">
+                        <TabPanel>
                             <TabPhotos :photos="photos" />
                         </TabPanel>
-                        <TabPanel class="bg-white p-3 shadow">
+                        <TabPanel class="bg-white dark:bg-slate-900 dark:text-gray-100 shadow p-3 sm:p-8 sm:rounded-lg">
                             <template v-if="isCurrentUserAdmin">
                                 <GroupForm :form="aboutForm" :form-errors="aboutFormErrors" />
                                 <div class="flex flex-1 gap-2 items-center">
