@@ -289,4 +289,9 @@ mailpit
 
     TODO : épingler un commentaire sur un post
 
-43. 
+43. Optimisation des requêtes
+
+    - utilisation de laravel-debugbar pour identifier les requêtes à optimiser
+    - Optimisation des requêtes avec un eager loading des relations avant l'utilisation des Resource.
+
+44. 

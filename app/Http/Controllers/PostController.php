@@ -33,16 +33,24 @@ class PostController extends Controller
     public function view(Post $post)
     {
         $group = $post->group;
-        if($group && !$group->hasApprovedUser(Auth::id())){
+        $userId = Auth::id();
+
+        if($group && !$group->hasApprovedUser($userId)){
             return to_route('group.profile', $group->slug)->with('notification', 'You need to join this group if you want to see the post');
         }
 
         $post->loadCount('reactions');
         $post->load([
             'comments' => function ($query) {
-                $query->withCount('reactions'); // SELECT * FROM comments WHERE post_id IN (1, 2, 3...)
-                // SELECT COUNT(*) from reactions
+                $query->withCount('reactions');
             },
+            'comments.user',
+            'comments.reactions' => function ($query) use ($userId) {
+                $query->where('user_id', $userId);
+            },
+            'reactions' => function ($query) use ($userId) {
+                $query->where('user_id', $userId);
+            }
         ]);
         return Inertia::render('Post/View', [
             'post'=> new PostResource($post),
