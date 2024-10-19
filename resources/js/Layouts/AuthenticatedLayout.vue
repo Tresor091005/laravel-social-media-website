@@ -1,11 +1,12 @@
 <script setup>
-import { ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import ApplicationLogo from '@/Components/ApplicationLogo.vue';
 import Dropdown from '@/Components/Dropdown.vue';
 import DropdownLink from '@/Components/DropdownLink.vue';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
 import {Link, router, usePage} from '@inertiajs/vue3';
 import TextInput from "@/Components/TextInput.vue";
+import {MoonIcon, SunIcon} from '@heroicons/vue/24/outline';
 
 const showingNavigationDropdown = ref(false);
 const authUser = usePage().props.auth.user
@@ -15,6 +16,21 @@ function search() {
     router.get(route('search', encodeURIComponent(keywords.value)))
 }
 
+const html = window.document.documentElement
+const inDarkMode = ref(html.classList.contains('dark'))
+
+function toggleDarkMode(){
+    if (inDarkMode.value) {
+        html.classList.remove('dark')
+        localStorage.setItem('darkMode', '0')
+        inDarkMode.value = !inDarkMode.value
+    } else {
+        html.classList.add('dark')
+        localStorage.setItem('darkMode', '1')
+        inDarkMode.value = !inDarkMode.value
+    }
+}
+
 </script>
 
 <template>
@@ -22,8 +38,8 @@ function search() {
             <nav class="bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700">
                 <!-- Primary Navigation Menu -->
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div class="flex items-center justify-between gap-4 h-16">
-                        <div class="flex">
+                    <div class="flex items-center justify-between gap-2 h-16">
+                        <div class="flex mr-2">
                             <!-- Logo -->
                             <div class="shrink-0 flex items-center">
                                 <Link :href="route('home')">
@@ -34,9 +50,14 @@ function search() {
                             </div>
                         </div>
 
-                        <div class="flex-1">
+                        <div class="flex items-center gap-3 flex-1">
                             <TextInput v-model="keywords" placeholder="Search on the website" class="w-full"
                                     @keyup.enter="search"/>
+
+                            <button @click="toggleDarkMode" class="dark:text-white">
+                                <MoonIcon v-if="inDarkMode" class="w-5 h-5"/>
+                                <SunIcon v-else class="w-5 h-5"/>
+                            </button>
                         </div>
 
                         <div class="hidden sm:flex sm:items-center">

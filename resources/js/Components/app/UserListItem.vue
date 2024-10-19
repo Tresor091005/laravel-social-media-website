@@ -25,7 +25,7 @@ defineEmits(['approve', 'reject', 'roleChange', 'delete'])
 </script>
 
 <template>
-    <div class="bg-white dark:text-gray-100 transition-all border-2 border-transparent hover:border-indigo-500" :class="darkShadow ? 'dark:bg-slate-900' : 'bg-inherit'">
+    <div class="bg-white dark:text-gray-100 transition-all border-2 border-transparent hover:border-indigo-500" :class="darkShadow ? 'dark:bg-slate-900' : 'dark:bg-slate-950'">
         <div class="flex items-center gap-2 py-2 px-2">
             <Link :href="route('profile', user.username)">
                 <img :src="user.avatar_url" class="w-[32px] rounded-full"/>

@@ -294,4 +294,11 @@ mailpit
     - utilisation de laravel-debugbar pour identifier les requêtes à optimiser
     - Optimisation des requêtes avec un eager loading des relations avant l'utilisation des Resource.
 
-44. 
+44. Implement dark mode
+
+    - utilisation de tailwind pour définir le darkmode (utilisation de classes)
+    - sauvegarde et récupération de la valeur dans authentificated layout et app.js
+
+    TODO : Redimensionner l'image lors de la création ou l'update de cover, améliorer la tab photos et y inclure les autres médias
+
+    TODO : Unifier le formulaire des commentaires

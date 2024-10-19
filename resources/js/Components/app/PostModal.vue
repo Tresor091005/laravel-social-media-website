@@ -2,7 +2,6 @@
 import { computed, watch, ref } from "vue";
 import { XMarkIcon, PaperClipIcon, BookmarkIcon, ArrowUturnLeftIcon } from "@heroicons/vue/24/solid";
 import { MusicalNoteIcon, DocumentIcon } from '@heroicons/vue/24/outline';
-import { TransitionRoot, TransitionChild, Dialog, DialogPanel, DialogTitle, } from "@headlessui/vue";
 import PostUserHeader from "@/Components/app/PostUserHeader.vue";
 import { useForm, usePage } from "@inertiajs/vue3";
 import { isAudio, isImage, isPdf, isVideo } from "@/helpers.js";
