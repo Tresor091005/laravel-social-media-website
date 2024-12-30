@@ -30,7 +30,7 @@ class CommentResource extends JsonResource
                 "id" => $this->user->id,
                 "name" => $this->user->name,
                 "username" => $this->user->username,
-                "avatar_url" => $avatarUrl,
+                "avatar_url" => env('APP_URL') . $avatarUrl,
             ]
         ];
     }

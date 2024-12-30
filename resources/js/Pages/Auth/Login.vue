@@ -5,7 +5,8 @@ import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
-import { Head, Link, useForm } from '@inertiajs/vue3';
+import { usePage, Link, useForm } from '@inertiajs/vue3';
+import { onMounted } from 'vue';
 
 defineProps({
     canResetPassword: {
@@ -27,11 +28,12 @@ const submit = () => {
         onFinish: () => form.reset('password'),
     });
 };
+
+onMounted(() => document.title = `Log in - ${usePage().props.APP_NAME}`)
 </script>
 
 <template>
     <GuestLayout>
-        <Head title="Log in" />
 
         <div class="text-center dark:text-gray-100">
             <h2 class="text-2xl text-center">Login</h2>

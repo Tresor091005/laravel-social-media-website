@@ -4,7 +4,8 @@ import PostItem from "@/Components/app/PostItem.vue";
 import PostModal from "@/Components/app/PostModal.vue";
 import AttachmentPreviewModal from "@/Components/app/AttachmentPreviewModal.vue";
 import { ref } from "vue";
-import { usePage, Head } from "@inertiajs/vue3";
+import { onMounted } from 'vue';
+import { usePage } from "@inertiajs/vue3";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 
 const authUser = usePage().props.auth.user;
@@ -37,11 +38,13 @@ function onModalHide() {
         user: authUser,
     }
 }
+
+onMounted(() => document.title = `Post - ${usePage().props.APP_NAME}`)
+
 </script>
 
 <template>
     <AuthenticatedLayout>
-        <Head title="Post" />
 
         <div class="p-8 max-w-[600px] mx-auto h-full overflow-auto">
             <PostItem :post="post"

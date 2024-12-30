@@ -1,10 +1,11 @@
 <script setup>
-import { Head } from '@inertiajs/vue3';
+import { usePage } from '@inertiajs/vue3';
 import GroupList from "@/Components/app/GroupList.vue";
 import FollowingList from "@/Components/app/FollowingList.vue";
 import PostList from "@/Components/app/PostList.vue";
 import CreatePost from "@/Components/app/CreatePost.vue";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
+import { onMounted } from 'vue';
 
 defineProps({
     posts: Object,
@@ -12,11 +13,10 @@ defineProps({
     followings: Array
 });
 
+onMounted(() => document.title = `Acceuil - ${usePage().props.APP_NAME}`)
 </script>
 
 <template>
-
-    <Head title="Acceuil" />
 
     <AuthenticatedLayout>
         <div class="grid lg:grid-cols-12 gap-3 p-4 h-full">

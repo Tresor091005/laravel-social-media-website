@@ -4,7 +4,8 @@ import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
-import { Head, useForm } from '@inertiajs/vue3';
+import { usePage, useForm } from '@inertiajs/vue3';
+import { onMounted } from 'vue';
 
 const props = defineProps({
     email: {
@@ -29,11 +30,12 @@ const submit = () => {
         onFinish: () => form.reset('password', 'password_confirmation'),
     });
 };
+
+onMounted(() => document.title = `Reset Password - ${usePage().props.APP_NAME}`)
 </script>
 
 <template>
     <GuestLayout>
-        <Head title="Reset Password" />
 
         <form @submit.prevent="submit">
             <div>

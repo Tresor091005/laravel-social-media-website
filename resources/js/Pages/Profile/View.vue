@@ -1,7 +1,7 @@
 <script setup>
-import { computed, ref } from 'vue'
+import { computed, ref, onMounted } from 'vue';
 import { TabGroup, TabList, Tab, TabPanels, TabPanel } from '@headlessui/vue'
-import { Head, useForm, usePage } from '@inertiajs/vue3';
+import { useForm, usePage } from '@inertiajs/vue3';
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import TabItem from "@/Pages/Profile/Partials/TabItem.vue";
 import Edit from "@/Pages/Profile/Edit.vue";
@@ -12,7 +12,6 @@ import CreatePost from "@/Components/app/CreatePost.vue";
 import PostList from "@/Components/app/PostList.vue";
 import UserListItem from "@/Components/app/UserListItem.vue";
 import TextInput from "@/Components/TextInput.vue";
-import PostAttachments from "@/Components/app/PostAttachments.vue";
 import TabPhotos from "@/Pages/Profile/TabPhotos.vue";
 
 const imagesForm = useForm({
@@ -128,11 +127,11 @@ function followUser() {
     })
 }
 
+onMounted(() => document.title = `Profile - ${usePage().props.APP_NAME}`)
+
 </script>
 
 <template>
-
-    <Head title="Profile" />
 
     <AuthenticatedLayout>
         <div class="max-w-[768px] mx-auto h-full overflow-auto">

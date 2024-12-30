@@ -37,6 +37,7 @@ class HandleInertiaRequests extends Middleware
                 'user' => $request->user() ? new UserResource($request->user()) : null,
             ],
             'attachmentExtensions' => StorePostRequest::$extensions,
+            'APP_NAME' => config('app.name', 'Laravel'),
         ];
     }
 }

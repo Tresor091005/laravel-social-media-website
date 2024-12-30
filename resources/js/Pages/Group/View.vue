@@ -5,7 +5,7 @@ import {TabGroup, TabList, Tab, TabPanels, TabPanel} from '@headlessui/vue'
 import {usePage} from "@inertiajs/vue3";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import TabItem from "@/Pages/Profile/Partials/TabItem.vue";
-import {Head, useForm} from '@inertiajs/vue3'
+import {useForm} from '@inertiajs/vue3'
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import InviteUserModal from "@/Pages/Group/InviteUserModal.vue";
 import UserListItem from "@/Components/app/UserListItem.vue";
@@ -14,6 +14,7 @@ import GroupForm from "@/Components/app/GroupForm.vue";
 import PostList from "@/Components/app/PostList.vue";
 import CreatePost from "@/Components/app/CreatePost.vue";
 import TabPhotos from "@/Pages/Profile/TabPhotos.vue";
+import { onMounted } from 'vue';
 
 const imagesForm = useForm({
     thumbnail: null,
@@ -188,11 +189,11 @@ function updateGroup() {
     })
 }
 
+onMounted(() => document.title = `Group - ${usePage().props.APP_NAME}`)
+
 </script>
 
 <template>
-
-    <Head title="Group" />
 
     <AuthenticatedLayout>
         <div class="max-w-[768px] mx-auto h-full overflow-auto">

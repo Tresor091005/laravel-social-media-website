@@ -15,6 +15,7 @@ class GroupUserResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        $avatarUrl = $this->avatar_path ? Storage::url($this->avatar_path) : '/img/default_avatar.webp';
         return [
             "id" => $this->id,
             "name" => $this->name,
@@ -22,7 +23,7 @@ class GroupUserResource extends JsonResource
             'status' => $this->status,
             'group_id' => $this->group_id,
             "username" => $this->username,
-            "avatar_url" => $this->avatar_path ? Storage::url($this->avatar_path) : '/img/default_avatar.webp',
+            "avatar_url" => env('APP_URL') . $avatarUrl,
         ];
     }
 }

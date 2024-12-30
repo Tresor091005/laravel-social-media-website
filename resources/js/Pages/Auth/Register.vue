@@ -4,7 +4,8 @@ import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
-import { Head, Link, useForm } from '@inertiajs/vue3';
+import { usePage, Link, useForm } from '@inertiajs/vue3';
+import { onMounted } from 'vue';
 
 const form = useForm({
     name: '',
@@ -18,11 +19,12 @@ const submit = () => {
         onFinish: () => form.reset('password', 'password_confirmation'),
     });
 };
+
+onMounted(() => document.title = `Register - ${usePage().props.APP_NAME}`)
 </script>
 
 <template>
     <GuestLayout>
-        <Head title="Register" />
 
         <form @submit.prevent="submit">
             <div>

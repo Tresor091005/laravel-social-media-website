@@ -1,9 +1,10 @@
 <script setup>
-import { Head } from '@inertiajs/vue3';
+import { usePage } from '@inertiajs/vue3';
 import UserListItem from "@/Components/app/UserListItem.vue";
 import GroupItem from "@/Components/app/GroupItem.vue";
 import PostList from "@/Components/app/PostList.vue";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
+import { onMounted } from 'vue';
 
 const props = defineProps({
     search: String,
@@ -12,11 +13,11 @@ const props = defineProps({
     posts: Object
 })
 
+onMounted(() => document.title = `Rechercher - ${usePage().props.APP_NAME}`)
+
 </script>
 
 <template>
-
-    <Head title="Rechercher" />
 
     <AuthenticatedLayout>
         <div class="p-4 lg:h-[65vh]">

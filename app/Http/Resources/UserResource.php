@@ -26,8 +26,8 @@ class UserResource extends JsonResource
             "updated_at" => $this->updated_at,
             "username" => $this->username,
             'pinned_post_id' => $this->pinned_post_id,
-            "cover_url" => $coverUrl,
-            "avatar_url" => $avatarUrl,
+            "cover_url" => env('APP_URL') . $coverUrl,
+            "avatar_url" => env('APP_URL') . $avatarUrl,
         ];
     }
 }

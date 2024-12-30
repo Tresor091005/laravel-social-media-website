@@ -4,7 +4,8 @@ import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
-import { Head, useForm } from '@inertiajs/vue3';
+import { usePage, useForm } from '@inertiajs/vue3';
+import { onMounted } from 'vue';
 
 defineProps({
     status: {
@@ -19,11 +20,12 @@ const form = useForm({
 const submit = () => {
     form.post(route('password.email'));
 };
+
+onMounted(() => document.title = `Forgot Password - ${usePage().props.APP_NAME}`)
 </script>
 
 <template>
     <GuestLayout>
-        <Head title="Forgot Password" />
 
         <div class="mb-4 text-sm text-gray-600 dark:text-gray-400">
             Forgot your password? No problem. Just let us know your email address and we will email you a password reset
